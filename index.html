@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="zh-HK"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#175c4b">
+<title>十二篇・隨身練｜DSE 中文 MC 練習</title>
+<style>
+:root{
+  --bg:#f5f4ee;--paper:#fff;--ink:#20372f;--muted:#60726a;
+  --green:#175c4b;--light:#eaf3ed;--border:#dce4dc;
+  --red:#a63732;--red-bg:#fff0ed;--gold:#8b641d;
+  --shadow:0 12px 36px rgba(30,60,45,.06);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  line-height:1.7;
+}
+button,input,select,textarea{font:inherit}
+button,select,input[type=file]{max-width:100%}
+button{
+  cursor:pointer;min-height:44px;padding:10px 17px;border-radius:12px;
+  border:1px solid var(--border);background:#fff;color:var(--ink);
+}
+button:hover:not(:disabled){border-color:var(--green);background:var(--light)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.primary{background:var(--green);color:#fff;border-color:var(--green)}
+button.primary:hover:not(:disabled){background:#104637}
+button.danger{color:var(--red)}
+button.small{padding:7px 12px;font-size:.9rem}
+input[type=checkbox],input[type=radio]{
+  width:19px;height:19px;flex-shrink:0;accent-color:var(--green);
+}
+input[type=range]{width:100%;accent-color:var(--green)}
+select{padding:10px;border:1px solid var(--border);border-radius:10px;background:#fff}
+:focus-visible{outline:3px solid #c89839;outline-offset:4px}
+h1,h2,h3,p{margin-top:0}
+h1{font-family:"Songti TC","PMingLiU",serif;font-size:clamp(2rem,5vw,3rem);margin-bottom:8px}
+h2{font-size:1.4rem}
+h3{font-size:1.1rem}
+p:last-child{margin-bottom:0}
+.wrap{max-width:1060px;margin:auto;padding:26px 20px 60px}
+.header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:28px}
+.brand{font-weight:800;letter-spacing:.07em;display:flex;align-items:center;gap:12px}
+.logo{
+  width:44px;height:44px;display:grid;place-items:center;
+  border-radius:13px;background:var(--green);color:white;font-size:1.3rem;
+}
+.pill,.tag{
+  display:inline-block;background:var(--light);color:var(--green);
+  border-radius:99px;padding:4px 12px;font-size:.85rem;
+}
+.hero{margin-bottom:24px}
+.eyebrow{font-size:.85rem;letter-spacing:.12em;color:var(--green);font-weight:700}
+.muted{color:var(--muted)}
+.small-text{font-size:.9rem}
+.notice{
+  padding:14px 17px;border:1px solid #e3d7b4;background:#fff9e9;
+  color:#73551e;border-radius:13px;margin:18px 0;
+}
+.card{
+  padding:26px;background:var(--paper);border:1px solid var(--border);
+  border-radius:22px;box-shadow:var(--shadow);margin-bottom:20px;
+}
+.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.between{justify-content:space-between}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.work-card{
+  border:1px solid var(--border);border-radius:14px;padding:12px 14px;
+  background:#fff;transition:background .15s,border-color .15s;
+}
+.work-card.on{border-color:var(--green);background:#f3f8f4}
+.work-top,.child-choice,.type-choice{
+  display:flex;align-items:center;gap:10px;cursor:pointer;min-height:44px;
+}
+.work-top{font-weight:650}
+.work-top .count{margin-left:auto;white-space:nowrap;font-size:.8rem;color:var(--muted)}
+.children{padding-left:24px;margin-top:5px}
+.child-choice{font-size:.94rem}
+.type-choice{
+  padding:14px;border:1px solid var(--border);border-radius:14px;
+}
+.type-choice.on{background:var(--light);border-color:var(--green)}
+.type-choice .count{margin-left:auto;color:var(--muted);font-size:.85rem}
+.steps{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.step{font-size:.88rem;padding:6px 13px;border-radius:99px;background:#edf0eb;color:var(--muted)}
+.step.active{background:var(--green);color:white}
+.selection-note{margin:16px 0 0;color:var(--muted)}
+.count-panel{
+  margin-top:22px;background:#f7f9f5;border-radius:16px;padding:20px;
+}
+.big-number{font-size:2rem;font-weight:800;color:var(--green)}
+.eligibility{margin-top:12px;min-height:30px}
+.error{color:var(--red)}
+.ok{color:var(--green)}
+details.manager{padding:20px 24px;background:#eeefe8;border-radius:18px;margin:24px 0}
+summary{cursor:pointer;font-weight:700;min-height:36px}
+.manager-body{padding-top:14px}
+#import-message{
+  white-space:pre-wrap;overflow-wrap:anywhere;max-height:280px;overflow:auto;
+  font-size:.9rem;margin-top:16px;
+}
+progress{
+  width:100%;height:12px;accent-color:var(--green);
+  border-radius:20px;overflow:hidden;
+}
+.quiz-nav{display:grid;grid-template-columns:repeat(auto-fill,minmax(43px,1fr));gap:7px;margin:18px 0 24px}
+.quiz-nav button{padding:6px;min-height:43px;border-radius:10px}
+.quiz-nav button.answered{background:var(--light);color:var(--green)}
+.quiz-nav button.current{border:2px solid var(--green);font-weight:800}
+fieldset{border:0;padding:0;margin:18px 0;min-width:0}
+legend{
+  font-size:1.25rem;font-weight:700;line-height:1.8;margin-bottom:18px;
+  white-space:pre-wrap;overflow-wrap:anywhere;width:100%;
+}
+.choice{
+  display:flex;gap:12px;align-items:flex-start;border:1px solid var(--border);
+  border-radius:14px;padding:16px;margin-bottom:12px;cursor:pointer;
+}
+.choice:hover{background:#f7faf6}
+.choice.on{border-color:var(--green);background:var(--light)}
+.choice input{margin-top:6px}
+.option-letter{font-weight:800;color:var(--green)}
+.option-text{white-space:pre-wrap;overflow-wrap:anywhere}
+.quiz-actions{border-top:1px solid var(--border);padding-top:18px;margin-top:24px}
+.score-box{text-align:center;padding:15px 0}
+.score{font-size:clamp(3rem,10vw,5rem);font-weight:850;line-height:1.2;color:var(--green)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.94rem}
+th,td{padding:12px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:#f4f7f2}
+.review{
+  border:1px solid var(--border);border-left:5px solid var(--green);
+  border-radius:14px;padding:20px;margin-top:16px;
+}
+.review.wrong{border-left-color:var(--red)}
+.review h3{white-space:pre-wrap;overflow-wrap:anywhere;margin:12px 0}
+.review ul{list-style:none;padding:0;margin:12px 0}
+.review li{padding:8px 11px;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}
+.review li.correct{background:var(--light);color:var(--green)}
+.review li.incorrect{background:var(--red-bg);color:var(--red)}
+.explanation{padding:13px;background:#f7f8f4;border-radius:10px;white-space:pre-wrap;overflow-wrap:anywhere}
+footer{text-align:center;color:var(--muted);font-size:.82rem;margin-top:28px}
+@media(max-width:650px){
+  .wrap{padding:18px 13px 40px}
+  .grid{grid-template-columns:1fr}
+  .card{padding:20px 16px;border-radius:17px}
+  .header{align-items:flex-start;margin-bottom:22px}
+  .header .pill{font-size:.75rem}
+  .actions button{flex:1}
+  .work-top{font-size:.94rem}
+  .quiz-actions button{flex:1}
+  .manager-body .row{align-items:stretch}
+  .manager-body .row>*{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="header">
+    <div class="brand"><span class="logo" aria-hidden="true">文</span>十二篇・隨身練</div>
+    <span class="pill" id="bank-badge">載入題庫中</span>
+  </header>
+
+  <div class="hero">
+    <p class="eyebrow">HKDSE 中文 · 文言經典 MC 練習</p>
+    <h1>把零碎時間，練成文言底氣。</h1>
+    <p class="muted">選篇章、選題型，每次專注完成 20–40 題。</p>
+    <p class="small-text muted" id="bank-info"></p>
+  </div>
+
+  <div class="notice" id="demo-note">
+    目前含有自擬示範題，只供測試功能，並非考評局試題。
+    正式使用前，請以已核對的題庫取代。
+  </div>
+
+  <main>
+    <section class="card" id="screen-works">
+      <div class="steps" aria-label="練習設定步驟">
+        <span class="step active">1 選擇範文</span>
+        <span class="step">2 題型及題數</span>
+        <span class="step">3 開始練習</span>
+      </div>
+      <div class="row between">
+        <div>
+          <h2 tabindex="-1">你想溫習哪篇範文？</h2>
+          <p class="muted small-text">
+            可單選、多選或全選。唐詩三首及詞三首亦可逐首選擇。
+          </p>
+        </div>
+        <div class="row">
+          <button id="work-all" class="small" type="button">全選範文</button>
+          <button id="work-none" class="small" type="button">清除選擇</button>
+        </div>
+      </div>
+      <div class="grid" id="work-grid"></div>
+      <p class="selection-note" id="work-selected" role="status"></p>
+      <div class="actions">
+        <button id="to-types" class="primary" type="button" disabled="">下一步：選擇題型 →</button>
+      </div>
+    </section>
+
+    <section class="card" id="screen-types" hidden="">
+      <div class="steps">
+        <span class="step">1 選擇範文</span>
+        <span class="step active">2 題型及題數</span>
+        <span class="step">3 開始練習</span>
+      </div>
+      <div class="row between">
+        <div>
+          <h2 tabindex="-1">今次想加強哪一方面？</h2>
+          <p class="muted small-text">右側題數只計算已選範文內的題目。</p>
+        </div>
+        <div class="row">
+          <button id="type-all" class="small" type="button">全選題型</button>
+          <button id="type-none" class="small" type="button">清除選擇</button>
+        </div>
+      </div>
+      <div class="grid" id="type-grid"></div>
+
+      <div class="count-panel">
+        <div class="row between">
+          <label for="q-count">本次練習題數</label>
+          <strong><span id="count-label" class="big-number">20</span> 題</strong>
+        </div>
+        <input id="q-count" type="range" min="20" max="40" step="1" value="20">
+        <div class="row between small-text muted"><span>20 題</span><span>40 題</span></div>
+        <p style="margin-top:16px">
+          符合條件的題目：<strong id="eligible-number">0</strong> 題
+        </p>
+        <p id="eligibility" class="eligibility" role="status"></p>
+      </div>
+
+      <div class="actions">
+        <button id="back-works" type="button">← 返回選擇範文</button>
+        <button id="start" class="primary" type="button" disabled="">隨機抽題，開始練習</button>
+      </div>
+    </section>
+
+    <section class="card" id="screen-quiz" hidden="">
+      <div class="row between">
+        <h2 tabindex="-1">專注練習</h2>
+        <button id="leave" class="small" type="button">離開本次練習</button>
+      </div>
+      <p id="quiz-summary" class="muted small-text"></p>
+      <p id="repeat-info" class="small-text muted"></p>
+      <p id="quiz-progress-text" role="status"></p>
+      <progress id="quiz-progress" value="0" max="20" aria-label="已作答題數"></progress>
+      <nav id="quiz-nav" class="quiz-nav" aria-label="選擇題號"></nav>
+      <div id="question-meta" class="row"></div>
+      <fieldset id="question-box"></fieldset>
+      <div class="row quiz-actions">
+        <button id="prev" type="button">← 上一題</button>
+        <button id="next" type="button">下一題 →</button>
+        <button id="submit" class="primary" type="button">交卷及查看解析</button>
+      </div>
+    </section>
+
+    <section class="card" id="screen-results" hidden="">
+      <h2 tabindex="-1">今次練習，完成！</h2>
+      <div class="score-box">
+        <div class="score" id="score-number"></div>
+        <p id="score-text"></p>
+        <p id="result-encouragement" class="muted"></p>
+      </div>
+      <h3>各題型表現</h3>
+      <div id="breakdown" class="table-wrap"></div>
+      <p class="muted small-text">分數只反映本次練習，不等同 DSE 等級。</p>
+      <div class="actions">
+        <button id="again" class="primary" type="button">相同條件，再抽一份</button>
+        <button id="change-filter" type="button">重新選擇範文／題型</button>
+      </div>
+      <hr style="border:0;border-top:1px solid var(--border);margin:26px 0">
+      <div class="row between">
+        <h3>答案及解析</h3>
+        <label class="row"><input id="review-only" type="checkbox">只看錯題及未答題</label>
+      </div>
+      <div id="review-list"></div>
+    </section>
+  </main>
+
+  <details class="manager" id="manager">
+    <summary>題庫管理／匯入及發佈</summary>
+    <div class="manager-body">
+      <p class="small-text">
+        Excel 請先另存為「CSV UTF-8」。每題一列，四個選項，正確答案填 A、B、C 或 D。
+        本功能只更改目前瀏覽器的題庫，不是有登入權限的管理後台。
+      </p>
+      <p class="small-text muted">
+        系統會檢查欄位、空白選項、答案格式及重複題，但不會自動判斷學科答案是否正確。
+        請先由老師核對題目及解析。
+      </p>
+      <div class="row">
+        <label for="csv-mode">匯入方式</label>
+        <select id="csv-mode">
+          <option value="replace">取代現有題庫（首次正式匯入建議使用）</option>
+          <option value="merge">合併新增題目</option>
+        </select>
+        <input id="csv-file" type="file" accept=".csv,text/csv" aria-label="選擇 CSV 題庫">
+      </div>
+      <div class="actions">
+        <button id="template" type="button">下載 CSV 範本</button>
+        <button id="export-csv" type="button">匯出目前題庫 CSV</button>
+        <button id="export-html" class="primary" type="button">匯出發佈版 HTML</button>
+        <button id="restore" class="danger" type="button">還原隨網站附送的題庫</button>
+      </div>
+      <p class="small-text muted" style="margin-top:16px">
+        要讓所有學生收到更新：匯入題庫 → 匯出發佈版 HTML →
+        以新檔案更新你託管的 index.html。只在這裡匯入，不會自動同步給其他人。
+      </p>
+      <div id="import-message" role="status"></div>
+    </div>
+  </details>
+
+  <footer>
+    非官方中文科自習工具 · 題目及答案於前端載入，不適合作保密考試。<br>
+    本程式不會上傳題庫或作答資料；重新整理頁面會清除本次作答。
+  </footer>
+  <noscript>請啟用 JavaScript 才能使用練習功能。</noscript>
+</div>
+
+<!--
+示範題格式：
+[篇章代號,題型,題幹,A,B,C,D,正確答案,解析]
+以下 40 題為自擬示範，並非附件的完整轉錄。
+-->
+<script id="bank-data" type="application/json">{"revision":"published-1794159762863-jo6pdx","questions":[{"work":"lianpo","type":"實詞詞解","stem":"「拜為上卿」中「拜」字的詞義是？","options":["行跪拜禮","授予官職、任命","拜訪、探望","請求、拜託"],"answer":"B","explanation":"動詞，解作授予官職。推測方法：觀察句式「拜＋人＋為＋官職」是古代任命官職的固定句式，前文寫廉頗大破齊國立功，後接官名「上卿」，可知為授官。","source":"","demo":false},{"work":"lianpo","type":"實詞詞解","stem":"「徒見欺」中「徒」字的詞義是？","options":["步行","門客、隨從","白白地、徒然","僅僅、只是"],"answer":"C","explanation":"副詞，解作白白地。推測方法：聯繫上下文，趙國若給予和氏璧卻得不到秦國十五城，就是白白被騙，含落空之意。","source":"","demo":false},{"work":"lianpo","type":"實詞詞解","stem":"「乃使其從者衣褐」中「衣」字的詞義是？","options":["名詞，衣服","動詞，穿著","形容詞，破舊的","動詞，遮蓋"],"answer":"B","explanation":"動詞，解作穿著。詞類活用：名詞用作動詞。推測方法：「衣」後接賓語「褐」（粗布衣），故由名詞活用為動詞。","source":"","demo":false},{"work":"lianpo","type":"實詞詞解","stem":"「肉袒負荊」中「負」字的詞義是？","options":["背著","倚仗、憑藉","違背","辜負"],"answer":"A","explanation":"動詞，解作背著。推測方法：觀察詞語搭配，「負」的賓語是具體物件「荊」（荊條），配合「肉袒」（露出上身），指背著荊條向相如請罪。","source":"","demo":false},{"work":"lianpo","type":"實詞詞解","stem":"「臣所以去親戚而事君者」中「親戚」的古義是？","options":["親近的朋友","家族以外的旁系親屬","親人（指父母兄弟等最親近的家人）","姻親關係的成員"],"answer":"C","explanation":"名詞，古義指父母、兄弟等最親近的家人。古今異義：今義範圍較廣，多指家庭以外的親屬。","source":"","demo":false},{"work":"lianpo","type":"虛詞詞解","stem":"「廉頗者，趙之良將也」中「者」字的作用是？","options":["代詞，解作「……的人」","助詞，用於主語之後表示停頓，引出判斷","助詞，與「所以」連用表示原因","助詞，表示設問"],"answer":"B","explanation":"助詞，無實義。推測方法：觀察句式，「……者，……也」是文言判斷句的固定格式，用於主語「廉頗」後作停頓並引出判斷。","source":"","demo":false},{"work":"lianpo","type":"虛詞詞解","stem":"「而君幸於趙王」中「於」字的詞義與用法是？","options":["介詞，解作「在」","介詞，解作「到」","介詞，解作「和、跟」","介詞，表示被動，解作「被」"],"answer":"D","explanation":"介詞，表示被動。推測方法：動詞「幸」（寵幸）之後用「於」引出主動者「趙王」，構成被動句「被趙王寵幸」。","source":"","demo":false},{"work":"lianpo","type":"虛詞詞解","stem":"「臣所以去親戚而事君者，徒慕君之高義也」中「所以……者」的作用是？","options":["表示結果，解作「因此」","表示原因，解作「……的原因」","表示憑藉，解作「用來……的方法」","表示條件，解作「只要……就」"],"answer":"B","explanation":"固定結構，表示原因。古今異義：今多作連詞「因此」，古漢語中「所以……者」常用於引出解釋原因的分句。","source":"","demo":false},{"work":"lianpo","type":"虛詞詞解","stem":"「公之視廉將軍孰與秦王？」中「之」字的作用是？","options":["結構助詞，解作「的」","代詞，指代廉頗","結構助詞，用於主謂之間，取消句子獨立性","動詞，解作「前往」"],"answer":"C","explanation":"結構助詞，取消句子獨立性。推測方法：「之」位於主語「公」（舍人們）與謂語動詞「視」之間，使主謂結構變成句子成分，無實義。","source":"","demo":false},{"work":"lianpo","type":"範文內容","stem":"在「完璧歸趙」事件中，藺相如發現秦王無意以城易璧後，採用了什麼計策取回和氏璧？","options":["謊稱璧上有瑕疵，請指示秦王看","直接拔劍脅迫秦王朝廷","派隨從在正殿偷走和氏璧","大聲呵斥秦王身邊的美人與侍從"],"answer":"A","explanation":"課文內容：相如察覺秦王無意給城，遂以「璧有瑕，請指示王」為由巧計騙回和氏璧，隨後持璧倚柱以死相逼。","source":"","demo":false},{"work":"lianpo","type":"範文內容","stem":"藺相如避讓廉頗，常稱病不上朝，並在路上引車避匿。他向門客解釋其真正原因是？","options":["體弱多病，無力與廉頗爭鬥","自知出身賤微，理虧愧疚","先國家之急而後私讎，防止兩虎相爭給秦國有機可乘","等待趙王親自下令調解二人矛盾"],"answer":"C","explanation":"課文內容：相如指出強秦不敢加兵趙國是因為有他與廉頗兩人，若兩虎共鬥勢不俱生，自己做法是「以先國家之急而後私讎也」。","source":"","demo":false},{"work":"lianpo","type":"修辭手法","stem":"「怒髮上衝冠」運用了什麼修辭手法？","options":["明喻","誇張","借代","擬人"],"answer":"B","explanation":"誇張手法：誇大頭髮直豎、好像衝起帽子的情態，用以突顯藺相如極度憤怒、不畏強權的威武形象。","source":"","demo":false},{"work":"lianpo","type":"修辭手法","stem":"「臣以為布衣之交尚不相欺，況大國乎！」中「布衣」運用了什麼修辭手法？","options":["借代","借喻","對偶","擬人"],"answer":"A","explanation":"借代手法：以「布衣」（平民所穿的麻布衣服）借代平民百姓，語帶含蓄。","source":"","demo":false},{"work":"lianpo","type":"修辭手法","stem":"「今兩虎共鬭，其勢不俱生」運用了什麼修辭手法？","options":["明喻","借喻","排比","誇張"],"answer":"B","explanation":"借喻手法：直接以「兩虎」比喻廉頗和藺相如二人，說明將相相爭必定兩敗俱傷，從而危及國家安全。","source":"","demo":false},{"work":"chushi","type":"實詞詞解","stem":"「今天下三分，益州疲弊」中「弊」字的詞義是？","options":["欺詐","困乏","壞處","毛病"],"answer":"B","explanation":"形容詞，解作困乏。「疲」指人力疲勞，「弊」指物力困乏，二字同義連用，指國力困乏。","source":"","demo":false},{"work":"chushi","type":"實詞詞解","stem":"「此誠危急存亡之秋也」中「秋」字的詞義是？","options":["秋天","收成","時刻","年份"],"answer":"C","explanation":"名詞，解作時刻、關頭。受「危急存亡」修飾，指關鍵時刻，可聯繫成語「多事之秋」。","source":"","demo":false},{"work":"chushi","type":"實詞詞解","stem":"「先帝不以臣卑鄙」中「卑鄙」的詞義是？","options":["品格惡劣","出身卑微、見識鄙陋","行為不端","地位低下且貪婪"],"answer":"B","explanation":"形容詞，卑指身份低微，鄙指見識淺陋，為諸葛亮自謙之辭，與今義「言行惡劣」不同。","source":"","demo":false},{"work":"chushi","type":"虛詞詞解","stem":"「蓋追先帝之殊遇」中「蓋」字的用法和意義是？","options":["名詞，解作傘蓋","動詞，解作遮蓋","副詞，解作大概","連詞，相當於「那是因為」"],"answer":"D","explanation":"連詞，位於句首承接前文，句末有「也」，構成「……者，蓋……也」句式以解釋原因。","source":"","demo":false},{"work":"chushi","type":"虛詞詞解","stem":"「此臣所以報先帝而忠陛下之職分也」中「所以」的意思是？","options":["表示結果的連詞","用來……的方法／途徑","因此","因而"],"answer":"B","explanation":"古今異義，此處「所以」解作「用來……的（方法或職務）」，指北伐興漢是諸葛亮用來報答先帝的職分。","source":"","demo":false},{"work":"chushi","type":"修辭手法","stem":"「臣本布衣，躬耕於南陽」中「布衣」運用了什麼修辭手法？","options":["借喻","借代","擬人","誇張"],"answer":"B","explanation":"借代。以平民所穿的粗布衣服「布衣」借代「平民」。","source":"","demo":false},{"work":"chushi","type":"修辭手法","stem":"「陟罰臧否」運用了什麼修辭手法？","options":["錯綜","頂真","對偶","比喻"],"answer":"A","explanation":"錯綜。即「陟臧（獎勵善者）」與「罰否（懲罰惡者）」交錯排列組合而成。","source":"","demo":false},{"work":"chushi","type":"範文內容","stem":"諸葛亮在《出師表》中建議後主「開張聖聽」，其主要目的是什麼？","options":["廣開言路，聽取忠諫","嚴刑峻法，以安百姓","削減軍費，修養生息","選拔武將，開疆拓土"],"answer":"A","explanation":"根據原文「誠宜開張聖聽，以光先帝遺德，恢弘志士之氣；不宜妄自菲薄……以塞忠諫之路也」，可知旨在廣開言路。","source":"","demo":false},{"work":"chushi","type":"範文內容","stem":"諸葛亮提出「親賢臣，遠小人」時，分別引用了哪兩個朝代的興衰歷史作為借鑑？","options":["夏朝與商朝","西周與東周","先漢（西漢）與後漢（東漢）","秦朝與三國"],"answer":"C","explanation":"根據原文「親賢臣，遠小人，此先漢所以興隆也；親小人，遠賢臣，此後漢所以傾頹也」，可知是以西漢與東漢為鑑。","source":"","demo":false},{"work":"chushi","type":"實詞詞解","stem":"「庶竭駑鈍」中「駑鈍」字面的比喻義與實際詞義分別是？","options":["強馬與利刃；比喻英勇強悍","劣馬與鈍刀；比喻自己才能平庸低劣","老牛與鈍斧；比喻勤奮努力","瘦狗與笨鳥；比喻出身低微"],"answer":"B","explanation":"駑指劣馬，鈍指不鋒利的刀。比喻自己才能平庸低劣，屬謙詞。","source":"","demo":false},{"work":"shishuo","type":"實詞詞解","stem":"「始速禍焉」中「速」字的詞義是？","options":["迅速","招致","加速","邀請"],"answer":"B","explanation":"動詞，解作招致。詞類活用：形容詞帶賓語「禍」活用為動詞。","source":"","demo":false},{"work":"shishuo","type":"實詞詞解","stem":"「吾從而師之」中「師」字的詞義是？","options":["老師","拜……為師","軍隊編制","學習道理"],"answer":"B","explanation":"詞類活用：「師」後面帶代詞賓語「之」，名詞活用作動詞，即「以之為師」。","source":"","demo":false},{"work":"shishuo","type":"實詞詞解","stem":"「道相似也」中「道」字的詞義是？","options":["道路","儒家學說","學問、道德修養","從師學習的風尚"],"answer":"C","explanation":"聯繫上下文：與「年相若」對舉，是士大夫比較彼此的條件，指學問、修養水平相近。","source":"","demo":false},{"work":"shishuo","type":"虛詞詞解","stem":"「句讀之不知，惑之不解」中「之」字的用法是？","options":["結構助詞，相當於「的」","代詞，相當於「它」","結構助詞，賓語前置的標誌","用於主謂之間，取消句子獨立性"],"answer":"C","explanation":"判斷句法位置：原意是「不知句讀」「不解惑」，賓語「句讀」「惑」提到動詞前，以「之」作標誌。","source":"","demo":false},{"work":"shishuo","type":"修辭手法","stem":"「古之學者必有師。師者，所以傳道受業解惑也。」運用了什麼修辭手法？","options":["頂真","借代","對偶","反問"],"answer":"A","explanation":"前句末尾與後句開首用相同的詞語「師」，使文氣連貫，一氣呵成。","source":"","demo":false},{"work":"shishuo","type":"修辭手法","stem":"「授之書而習其句讀者」中的「句讀」運用了什麼修辭手法？","options":["明喻","借代","誇張","頂真"],"answer":"B","explanation":"「句讀」本指文辭停頓處，這裏借指讀書識字的粗淺知識，與「傳其道、解其惑」相對。","source":"","demo":false},{"work":"shishuo","type":"範文內容","stem":"下列哪一項不是韓愈在《師說》中提出的老師職責？","options":["傳道","受業","解惑","治國"],"answer":"D","explanation":"課文第一段明確指出老師的職責是「傳道、受業、解惑」。","source":"","demo":false},{"work":"shishuo","type":"範文內容","stem":"韓愈撰寫《師說》贈予李蟠的直接原因是？","options":["李蟠考取功名","李蟠能行古道，不拘於時，學於余","李蟠請求韓愈為其解答疑問","韓愈欲藉此批判國子監制度"],"answer":"B","explanation":"末段提到「李氏子蟠……不拘於時，學於余。余嘉其能行古道，作《師說》以貽之」。","source":"","demo":false},{"work":"shishuo","type":"虛詞詞解","stem":"「其皆出於此乎！」中「其」字的用法是？","options":["人稱代詞，解作「他們」","指示代詞，解作「那些」","語氣副詞，表示推測，相當於「大概」","語氣副詞，表示感歎，相當於「真是」"],"answer":"C","explanation":"觀察固定搭配：「其……乎」是表示推測的固定句式。","source":"","demo":false},{"work":"autumn","type":"修辭手法","stem":"「竹喧歸浣女，蓮動下漁舟」運用了什麼手法？","options":["借代與誇張","對仗與倒裝（並以動襯靜）","頂真與設問","明喻與擬人"],"answer":"B","explanation":"原序為「浣女歸竹喧、漁舟下蓮動」，以倒裝營造未見其人先聞其聲之效。","source":"","demo":false},{"work":"autumn","type":"實詞詞解","stem":"「蓮動下漁舟」中「下」字的詞義是？","options":["方位名詞，指下面","動詞，指順流而下","動詞，指降落、下雨","形容詞，指低劣的"],"answer":"B","explanation":"對仗比對與句法位置：「下」與「竹喧歸浣女」之「歸」相對，「歸」為動詞，可知「下」亦為動詞；聯繫上下文「漁舟」在水中前行帶動蓮葉，可推知指順流而下。","source":"","demo":false},{"work":"autumn","type":"實詞詞解","stem":"「空山新雨後」中「空」字的最貼切詞義是？","options":["空無一物、毫無生命","天空、蒼穹","空曠、幽靜、遠離塵俗","虛幻、不存在"],"answer":"C","explanation":"聯繫上下文與知人論世：「空」修飾名詞「山」，為形容詞。詩中寫有月、松、泉、浣女、漁舟，非真「無物」，故取空曠幽靜之意，並寄寓佛家空明無執的心境。","source":"","demo":false},{"work":"autumn","type":"實詞詞解","stem":"「隨意春芳歇」中「歇」字的詞義是？","options":["休息、歇息","停息、凋謝","隱藏、消失","竭盡、耗盡"],"answer":"B","explanation":"組詞法與搭配對象：由現代詞「歇息」可推知有停止之意；其主語為「春芳」（春花），花草停止生長即指凋謝，與秋色仍美相對。","source":"","demo":false},{"work":"autumn","type":"實詞詞解","stem":"詩題「山居秋暝」中「暝」字的詞義與讀音是？","options":["名詞，日暮、夜晚（音〔命〕）","形容詞，昏暗（音〔明〕）","動詞，閉上眼睛（音〔命〕）","名詞，早晨（音〔明〕）"],"answer":"A","explanation":"字形與結構分析：「暝」從「日」，與時間相關。「秋暝」與「山居」對舉，「暝」為時間名詞，指傍晚，讀去聲〔命〕（ming6），並可由內文「天氣晚來秋」印證。","source":"","demo":false},{"work":"autumn","type":"實詞詞解","stem":"「明月松間照」中「間」字的詞義與語法位置是？","options":["動詞，離間","名詞，中間、處所","副詞，偶爾","量詞，一間房屋"],"answer":"B","explanation":"句法位置與對仗：放在名詞「松」後組成「松間」，為名詞＋方位詞結構，表處所；與下句「石上」之「上」相對仗。","source":"","demo":false},{"work":"autumn","type":"修辭手法","stem":"「竹喧歸浣女，蓮動下漁舟」運用了什麼倒裝手法？","options":["原序為「竹喧歸浣女，漁舟下蓮動」","原序為「浣女歸竹喧，漁舟下蓮動」","原序為「浣女歸竹喧，蓮動下漁舟」","原序為「歸浣女竹喧，下漁舟蓮動」"],"answer":"B","explanation":"倒裝手法分析：原句結構應為「浣女歸竹喧、漁舟下蓮動」，前後對調以營造「未見其人，先聞其聲」及動態視覺效果。","source":"","demo":false},{"work":"autumn","type":"修辭手法","stem":"「竹喧歸浣女，蓮動下漁舟」主要運用了哪種表現手法來突出山的環境？","options":["直抒胸臆","反襯（以動襯靜）","虛實相生","對比（以惡襯美）"],"answer":"B","explanation":"反襯手法分析：以竹林中浣女的喧鬧笑聲反襯山林原本的寂靜，以漁舟觸碰蓮葉的動態反襯河流原本的平靜。","source":"","demo":false},{"work":"autumn","type":"修辭手法","stem":"尾聯「隨意春芳歇，王孫自可留」運用了什麼修辭手法？","options":["明喻","誇張","用典（反用典故）","借代"],"answer":"C","explanation":"用典分析：反用《楚辭·招隱士》「王孫兮歸來，山中兮不可以久留」之典故。原典勸隱士離開山中，王維反用其意，強調秋山亦美，王孫自可留居。","source":"","demo":false},{"work":"autumn","type":"範文內容","stem":"《山居秋暝》一詩的「詩眼」是哪一個字？","options":["秋","晚","空","留"],"answer":"C","explanation":"詩眼分析：「空」統攝全詩清幽、澄澈而遠離塵俗的意境，寫出山野清空幽靜，並帶出作者受佛教影響之空明心境。","source":"","demo":false},{"work":"autumn","type":"範文內容","stem":"根據《山居秋暝》，尾聯表達了作者怎樣的思想感情？","options":["對春光逝去的傷感悲痛","對官場生活的厭倦及對山居隱逸生活的嚮往","渴望重返朝廷建立功業","對身世漂泊、老病孤單的感歎"],"answer":"B","explanation":"旨意理解：尾聯藉反用典故，表達秋山之美足以留人，寄寓詩人厭倦官場、嚮往恬淡隱逸生活的胸懷。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「滕子京謫守巴陵郡」中「謫」字的詞義是？","options":["出任長官","被貶官、降職調離京城","責備、抨擊","遷徙、搬家"],"answer":"B","explanation":"動詞，解作被貶官。推測方法：聯繫上下文及背景，句中有人物（滕子京）和地點（巴陵郡），又與下文「遷客」照應；部首「言」也可聯想到因過失受責備降職。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「滕子京謫守巴陵郡」中「守」字的詞義是？","options":["防守、守衛","堅守、恪守","出任郡的長官","等待、陪伴"],"answer":"C","explanation":"名詞活用作動詞，解得出任郡的長官。推測方法：「守」緊接「謫」，後帶地名「巴陵郡」作賓語，結合文化常識（郡的長官稱太守），推知解作出任郡的長官。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「越明年，政通人和」中「越」字的詞義是？","options":["超越","跨過","越來越","及、到了"],"answer":"D","explanation":"動詞，解作及、到了。推測方法：聯繫上下文，上句寫「慶曆四年春」，此句接「明年」，表示時間推移，可推知「越」指到了下一年。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「增其舊制」中「制」字的詞義是？","options":["制度","規模","限制","製作"],"answer":"B","explanation":"名詞，解作規模。推測方法：「制」前有代詞「其」和形容詞「舊」修飾，應為名詞；建築物可以「增」的是規模，由此推知詞義。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「銜遠山，吞長江」中「銜」字的詞義是？","options":["含着、包含","接受","銜接、連接","官職名銜"],"answer":"A","explanation":"動詞，解作含着、包含。推測方法：對偶互證，「銜遠山」與「吞長江」相對，「吞」是口部動作，可推知「銜」也是與口有關的動作。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「前人之述備矣」中「備」字的詞義是？","options":["預備、準備","防備","詳盡、完備","具備、擁有"],"answer":"C","explanation":"形容詞，解作詳盡、完備。推測方法：聯繫上下文及句法位置，「備」在主語「前人之述」後作謂語，指前人對岳陽樓景色的描述已十分詳盡。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「南極瀟湘」中「極」字的詞義是？","options":["極點","盡、直達","極其、非常","房屋的正梁"],"answer":"B","explanation":"動詞，解作盡、直達。推測方法：對偶互證，「南極瀟湘」與「北通巫峽」相對，「極」與「通」位置相同，同為動詞，推知解作直達。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「則有去國懷鄉」中「去」字的詞義是？","options":["前往","離開","距離","除去"],"answer":"B","explanation":"動詞，解作離開。推測方法：古今異義及對偶互證，「去國」與「懷鄉」並列，遠離京城才會懷念家鄉，可推知「去」是「離開」。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「則有去國懷鄉」中「國」字的詞義是？","options":["國家","故鄉","國都、京城","封地"],"answer":"C","explanation":"名詞，解作國都、京城。推測方法：古今異義及聯繫背景，遷客是被貶離京的官吏，所離開的是京城，不是今義的「國家」。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「至若春和景明」中「景」字的詞義是？","options":["景象","景致","日光","仰慕"],"answer":"C","explanation":"名詞，解作日光。推測方法：古今異義及對偶互證，「春和」對「景明」，與「明」搭配，加上部首「日」，推知是日光。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「沙鷗翔集」中「集」字的詞義是？","options":["聚集","棲止、停息","集會","成編的著作"],"answer":"B","explanation":"動詞，解作棲止、停息。推測方法：字形結構及詞語結構，從「隹」停在「木」上可知與鳥停在樹上有關；「翔」與「集」並列，一動一靜。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「而或長煙一空」中「空」字的詞義是？","options":["天空","空虛","消散、一掃而空","徒然、白白地"],"answer":"C","explanation":"形容詞活用作動詞，解作消散、一掃而空。推測方法：判斷詞性，「空」在主語「長煙」和副詞「一」後作謂語；下句「皓月千里」，雲霧散盡才見明月。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「微斯人，吾誰與歸」中「微」字的詞義是？","options":["細微","衰微","卑微","(如果)沒有"],"answer":"D","explanation":"動詞（含假設語氣），解作（如果）沒有。推測方法：觀察固定用法，「微」用在句首、後接名詞，下句說出結果，是「如果沒有……就……」的假設句式。","source":"","demo":false},{"work":"yueyang","type":"實詞詞解","stem":"「吾誰與歸」中「歸」字的詞義是？","options":["回家","歸依、追隨","歸還","女子出嫁"],"answer":"B","explanation":"動詞，解作歸依、追隨。推測方法：句式還原為「吾與誰歸」；上文推崇古仁人，作者表示要以古仁人為依歸，推知是歸依、追隨。","source":"","demo":false},{"work":"yueyang","type":"虛詞詞解","stem":"「乃重修岳陽樓」中「乃」字的詞性及詞義是？","options":["副詞；竟然","連詞；於是","人稱代詞；你的","副詞；才是"],"answer":"B","explanation":"連詞，相當於「於是」。推測方法：位於句首，承接上文「政通人和，百廢具興」，表示在這種情況下才做下一件事。","source":"","demo":false},{"work":"yueyang","type":"虛詞詞解","stem":"「屬予作文以記之」中「以」字的詞性及詞義是？","options":["介詞；用","介詞；因為","連詞；表示目的，相當於「來」","動詞；以為"],"answer":"C","explanation":"連詞，相當於「來」。推測方法：「以」連接兩個動作「作文」和「記之」，後一個動作是前一個動作的目的。","source":"","demo":false},{"work":"yueyang","type":"虛詞詞解","stem":"「覽物之情，得無異乎」中「得無……乎」固定結構的意思是？","options":["能夠沒有……嗎","得不到……嗎","能不……嗎","恐怕……吧"],"answer":"C","explanation":"副詞與語氣助詞配合，表示反問，相當於「能不……嗎」。推測方法：「得無」與句末「乎」呼應，是文言常見的反問格式。","source":"","demo":false},{"work":"yueyang","type":"虛詞詞解","stem":"「不以物喜，不以己悲」中「以」字的詞性及詞義是？","options":["介詞；因為","介詞；按照","連詞；而且","動詞；認為"],"answer":"A","explanation":"介詞，相當於「因為」。推測方法：「以」後接名詞「物」「己」，構成介賓結構修飾「喜」「悲」，表示喜悲的原因。","source":"","demo":false},{"work":"yueyang","type":"虛詞詞解","stem":"「居廟堂之高」中「之」字的作用是？","options":["結構助詞，解作「的」","代詞，代指廟堂","結構助詞，定語後置的標誌","動詞，解作「去、往」"],"answer":"C","explanation":"結構助詞，定語後置的標誌。推測方法：「廟堂之高」即「高高的朝廷」，修飾語放在中心語之後，「之」為標誌。","source":"","demo":false},{"work":"yueyang","type":"修辭手法","stem":"「銜遠山，吞長江」運用了什麼修辭手法？","options":["明喻","擬人","借代","誇張"],"answer":"B","explanation":"擬人。以「銜」「吞」把洞庭湖寫得像能含吞山水，突顯其浩瀚氣勢。","source":"","demo":false},{"work":"yueyang","type":"修辭手法","stem":"「浮光躍金，靜影沉璧」運用了什麼修辭手法？","options":["比喻（對偶、駢偶）","擬人","借代","誇張"],"answer":"A","explanation":"比喻。把波光比作跳躍的金子，把月亮倒影比作沉在水中的璧玉，寫出月夜湖面動靜之美。","source":"","demo":false},{"work":"yueyang","type":"修辭手法","stem":"「錦鱗游泳」中「錦鱗」運用了什麼修辭手法？","options":["借喻","擬人","借代","誇張"],"answer":"C","explanation":"借代。以魚的局部特徵「鱗」來代替魚本身，「錦鱗」指美麗色彩鮮豔的魚。","source":"","demo":false},{"work":"yueyang","type":"修辭手法","stem":"「居廟堂之高，則憂其民；處江湖之遠，則憂其君」運用了什麼修辭手法？","options":["對比與隔句對（對偶、借代）","頂真與排比","層遞與比喻","擬人與設問"],"answer":"A","explanation":"對偶（隔句對）、對比及借代（廟堂代朝廷、江湖代遠離朝廷之處）。對比古仁人身處朝廷與遠離朝廷兩種處境，突顯始終關心國家百姓。","source":"","demo":false},{"work":"yueyang","type":"修辭手法","stem":"「不以物喜，不以己悲」運用了什麼修辭手法？","options":["互文（與對偶）","排比","頂真","迴環"],"answer":"A","explanation":"互文。上下兩句互相補充，意為：不因外物的好壞而或喜或悲，也不因個人的得失而或喜或悲。","source":"","demo":false},{"work":"yueyang","type":"範文內容","stem":"下列哪一項是范仲淹寫作《岳陽樓記》的主要原因？","options":["親臨岳陽樓被美景感動而作","應滕子京之叮囑委託撰文記述重修岳陽樓一事","朝廷命其記錄洞庭湖的地理風貌","記錄自己被貶官至巴陵郡的心境"],"answer":"B","explanation":"文章首段提及「乃重修岳陽樓……屬予作文以記之」，說明是受滕子京叮囑委託而寫。","source":"","demo":false},{"work":"yueyang","type":"範文內容","stem":"文中「古仁人」的處世心態與「遷客騷人」有何不同？","options":["古仁人悲天憫人，遷客騷人獨善其身","古仁人「不以物喜，不以己悲」，遷客騷人因陰晴景物而生悲喜","古仁人喜歡遊山玩水，遷客騷人關心朝政","古仁人追求個人榮辱，遷客騷人寵辱皆忘"],"answer":"B","explanation":"全文主旨及對比手法顯示，遷客騷人覽物而生悲喜（以物喜以己悲），而古仁人則能做到「不以物喜，不以己悲」，始終憂國憂民。","source":"","demo":false},{"work":"yueyang","type":"範文內容","stem":"范仲淹在《岳陽樓記》中點明全篇主旨、抒發抱負的名句是？","options":["政通人和，百廢具興","銜遠山，吞長江，浩浩湯湯","先天下之憂而憂，後天下之樂而樂","日星隱曜，山嶽潛形"],"answer":"C","explanation":"末段通過設問導出「先天下之憂而憂，後天下之樂而樂」，點明全文議論的主旨與作者的情懷抱負。","source":"","demo":false},{"work":"free","type":"實詞詞解","stem":"「始速禍焉」中「速」字的詞義是？","options":["迅速","招致","加速","邀請"],"answer":"B","explanation":"動詞，解作招致。詞類活用：形容詞帶賓語「禍」活用為動詞。","source":"","demo":false},{"work":"free","type":"修辭手法","stem":"「今夫斄牛，其大若垂天之雲」運用了什麼修辭手法？","options":["明喻與誇張","借代與對偶","暗喻與擬人","借喻與頂真"],"answer":"A","explanation":"句中使用喻詞「若」，把斄牛比作天邊的雲，屬明喻；同時誇大其體形，屬誇張手法。","source":"","demo":false},{"work":"free","type":"虛詞詞解","stem":"「子獨不見狸狌乎」中「獨」字的詞義與作用是？","options":["副詞；解作單獨","副詞；解作難道，加強反問語氣","形容詞；解作獨特","連詞；解作唯獨"],"answer":"B","explanation":"固定句式「獨……乎」屬反問句式，「獨」放在否定詞「不」前，加強反問語氣，相當於「難道」。","source":"","demo":false},{"work":"free","type":"實詞詞解","stem":"「我樹之成而實五石」中「樹」字的詞性及詞義是？","options":["名詞；樹木","動詞；種植","形容詞；直立的","副詞；建立了"],"answer":"B","explanation":"「樹」處於主語「我」之後與代詞賓語「之」之前，位於謂語位置，故活用為動詞，解作種植。","source":"","demo":false},{"work":"free","type":"實詞詞解","stem":"「卑身而伏」中「卑」字的用法與詞義是？","options":["名詞活用為動詞；貶低身份","形容詞活用為動詞；使身子低下、彎低身子","動詞活用為形容詞；自卑的","副詞；卑劣地"],"answer":"B","explanation":"形容詞「卑」帶賓語「身」，屬使動用法，解作使身體低下。","source":"","demo":false},{"work":"free","type":"虛詞詞解","stem":"「夫子固拙於用大矣」中「於」字的詞義與用法是？","options":["介詞；引出動作發生的時間","介詞；表示範圍，相當於「在……方面」","介詞；表示被動，相當於「被」","介詞；表示比較，相當於「比」"],"answer":"B","explanation":"形容詞「拙」後接「於＋動作」，表示在哪個領域或方面表現笨拙。","source":"","demo":false},{"work":"free","type":"修辭手法","stem":"「其大本擁腫而不中繩墨，其小枝卷曲而不中規矩」運用了什麼修辭手法？","options":["排比","對偶","層遞","比擬"],"answer":"B","explanation":"兩句句式結構整齊，上下句相對，描寫樗樹主幹與枝條皆不符規矩，屬對偶手法。","source":"","demo":false},{"work":"free","type":"範文內容","stem":"莊子借樗樹「不夭斤斧，物無害者」的結果，旨在闡明什麼核心觀念？","options":["木材品質不佳者難成大器","無用之用，方為大用；不求世俗之用反能保全天年而達至逍遙","世人皆偏愛有經濟價值的樹木","萬物皆應追求盡快長成有用之材"],"answer":"B","explanation":"樗樹因不合世俗規矩而被視為「無用」，但也正因「無用」而免遭砍伐，得以保全天年，達到精神上的自在逍遙。","source":"","demo":false},{"work":"xishan","type":"實詞詞解","stem":"「始速禍焉」中「速」字的詞義是？","options":["迅速","招致","加速","邀請"],"answer":"B","explanation":"動詞，解作招致。詞類活用：形容詞帶賓語「禍」活用為動詞。","source":"","demo":false},{"work":"xishan","type":"實詞詞解","stem":"「窮迴溪」中「窮」字的詞義是？","options":["貧窮","走到盡頭、走遍","窮盡","停止"],"answer":"B","explanation":"動詞；走到盡頭、走遍。排比句互證：「窮迴溪」與「上高山」「入深林」結構相同，「窮」為動詞。聯想成語「山窮水盡」。","source":"","demo":false},{"work":"xishan","type":"實詞詞解","stem":"「始指異之」中「異」字的用法和詞義是？","options":["名詞；奇異的事物","形容詞；特別","形容詞意動用法；以之為異，覺得它奇異","動詞；區別"],"answer":"C","explanation":"形容詞意動用法。形容詞「異」後面帶賓語「之」，可譯作「認為……奇異」。","source":"","demo":false},{"work":"xishan","type":"實詞詞解","stem":"「緣染溪」中「緣」字的詞義是？","options":["因由","邊緣","攀爬","沿着"],"answer":"D","explanation":"動詞；沿着。排比句互證：與「過湘江」「斫榛莽」並列為動詞。聯想成語「緣木求魚」。","source":"","demo":false},{"work":"xishan","type":"實詞詞解","stem":"「不與培塿為類」中「培塿」是指？","options":["高聳的山峰","小土丘","深谷","平原"],"answer":"B","explanation":"名詞；小土丘。字形分析從「土」，對比「特出」的西山，推知為低矮小山。","source":"","demo":false},{"work":"xishan","type":"虛詞詞解","stem":"「而未始知西山之怪特」中「未始」的意思是？","options":["還沒開始","不曾、未曾","開始時不","不可能"],"answer":"B","explanation":"副詞；「未始」為固定搭配，等於「未嘗」，意思是「不曾」。","source":"","demo":false},{"work":"xishan","type":"虛詞詞解","stem":"「不知日之入」中「之」字的作用是？","options":["代詞，代太陽","助詞，解作「的」","取消句子獨立性，不譯","動詞，解作「去」"],"answer":"C","explanation":"結構助詞；用於主語「日」與謂語「入」之間，取消句子的獨立性，不譯。","source":"","demo":false},{"work":"xishan","type":"虛詞詞解","stem":"「故為之文以志」中「以」字的意思是？","options":["因為","用來、以便（表示目的）","按照","以為"],"answer":"B","explanation":"連詞；表示目的，相當於「用來」「以便」。聯繫上下文，寫文章目的是記錄這次遊覽。","source":"","demo":false},{"work":"xishan","type":"範文內容","stem":"文中「心凝形釋，與萬化冥合」一句反映作者當時怎樣的精神狀態？","options":["依然憂慮政治迫害，精神高度緊張","精神與大自然融為一體，達到忘我釋懷的境界","感到前途茫茫，身心極度疲憊","對過去被貶的經歷感到萬分憤恨"],"answer":"B","explanation":"「心凝形釋」寫形體不受拘束，與天地自然冥冥融合，破除首段「恆惴慄」的恐懼，達致釋懷忘我。","source":"","demo":false},{"work":"xishan","type":"範文內容","stem":"作者在文中以「培塿」襯托西山，主要的託物言志意圖是？","options":["寄寓作者懷才不遇、渴望回朝的心情","寄寓作者蔑視世俗、不與庸俗者同流的品格","表現作者對永州自然美景的讚賞","感慨自己年華老去、一事無成"],"answer":"B","explanation":"西山特立不與培塿為類，寓意作者自己高潔特立，不願與世俗庸俗之輩同流合污。","source":"","demo":false},{"work":"xishan","type":"修辭手法","stem":"「縈青繚白」一語運用了哪種修辭手法？","options":["誇張","借代","擬人","頂真"],"answer":"B","explanation":"借代；以顏色代事物，「青」代青山，「白」代白水（江水溪流）。","source":"","demo":false},{"work":"xishan","type":"修辭手法","stem":"「到則披草而坐，傾壺而醉。醉則更相枕以臥，臥而夢……覺而起，起而歸」運用了什麼修辭手法？","options":["排比","頂真","對偶","比喻"],"answer":"B","explanation":"頂真；以「到」「醉」「臥」「起」頂接上句，使敘事一氣呵成，表現活動循環往復的無聊與苦悶。","source":"","demo":false},{"work":"xishan","type":"修辭手法","stem":"「則凡數州之土壤，皆在衽席之下」運用了什麼修辭手法？","options":["比喻","誇張","擬物","設問"],"answer":"B","explanation":"誇張；作者坐在席上，數州土地盡在腳下，極力突顯西山之高聳與視野之廣。","source":"","demo":false},{"work":"liuguo","type":"實詞詞解","stem":"「始速禍焉」中「速」字的詞義是？","options":["迅速","招致","加速","邀請"],"answer":"B","explanation":"動詞，解作招致。詞類活用：形容詞帶賓語「禍」活用為動詞。","source":"","demo":false},{"work":"liuguo","type":"實詞詞解","stem":"「弊在賂秦」中「弊」字的詞義是？","options":["疲弊","弊病","欺騙","遮蔽"],"answer":"B","explanation":"名詞，解作弊病。「弊」在句首作主語，後接「在」，可知是名詞。聯繫上下文，作者先駁斥「兵不利，戰不善」，再提出真正的毛病「在賂秦」，故解作「弊病」。","source":"","demo":false},{"work":"liuguo","type":"實詞詞解","stem":"「破滅之道也」中「道」字的詞義是？","options":["道路","道理","取道","說話"],"answer":"B","explanation":"名詞，解作道理。在「之」之後作中心語，必為名詞。「……也」是判斷句，解釋「賂秦而力虧」為何導致破滅，故「道」指導致破滅的道理（途徑）。","source":"","demo":false},{"work":"liuguo","type":"實詞詞解","stem":"「固不在戰矣」中「固」字的詞義是？","options":["堅固","頑固","本來","必定"],"answer":"C","explanation":"副詞，解作本來。用在否定詞「不」之前修飾謂語，屬副詞。聯繫上下文，前文比較秦國割地所得與戰勝所得，得出「秦國真正想要的，本來就不在戰爭」。","source":"","demo":false},{"work":"liuguo","type":"實詞詞解","stem":"「子孫視之不甚惜」中「惜」字的詞義是？","options":["愛惜","可惜","痛惜","吝嗇"],"answer":"A","explanation":"動詞，解作愛惜。受程度副詞「甚」修飾，作謂語。與「先祖父暴霜露，斬荊棘」形成對比，後句又有「如棄草芥」，故「不甚惜」即「不怎麼愛惜」。","source":"","demo":false},{"work":"liuguo","type":"實詞詞解","stem":"「惜其用武而不終也」中「惜」字的詞義是？","options":["愛惜","可惜","珍惜","顧惜"],"answer":"B","explanation":"形容詞，解作可惜、惋惜。放在句首，後面是一整個分句，表達作者對李牧被讒言所害、趙國滅亡的評價和惋惜情感。","source":"","demo":false},{"work":"liuguo","type":"實詞詞解","stem":"「以地事秦」中「事」字的詞義是？","options":["事情","事業","侍奉","從事"],"answer":"C","explanation":"動詞，解作侍奉。名詞活用為動詞，「事」後面帶賓語「秦」。割地是為了討好秦國，故解作侍奉。","source":"","demo":false},{"work":"liuguo","type":"實詞詞解","stem":"「禮天下之奇才」中「禮」字的詞義是？","options":["禮節","禮品","禮待","禮貌"],"answer":"C","explanation":"動詞，解作禮待（以禮相待）。名詞活用為動詞，「禮」帶賓語「奇才」；對偶句「以賂秦之地，封天下之謀臣；以事秦之心，禮天下之奇才」，「禮」與動詞「封」位置相對。","source":"","demo":false},{"work":"liuguo","type":"實詞詞解","stem":"「後秦擊趙者再」中「再」字的詞義是？","options":["再次","兩次","第二次","重複"],"answer":"B","explanation":"副詞，解作兩次。古今異義：古代「再」多指「兩次」。配合「李牧連卻之」，可知秦國兩次進攻都被擊退。","source":"","demo":false},{"work":"liuguo","type":"實詞詞解","stem":"「李牧連卻之」中「卻」字的詞義是？","options":["退後","拒絕","擊退","退縮"],"answer":"C","explanation":"動詞，解作擊退。受副詞「連」修飾，帶賓語「之」（秦兵）。使動用法：「卻之」即使秦兵退卻。","source":"","demo":false},{"work":"liuguo","type":"虛詞詞解","stem":"「蓋失強援」中「蓋」字的詞義和用法是？","options":["名詞，解作車蓋","連詞，解作因為","副詞，解作大概","動詞，解作遮蓋"],"answer":"B","explanation":"連詞，解作因為。放在句首，承接上句「不賂者以賂者喪」，解釋其滅亡的原因。","source":"","demo":false},{"work":"liuguo","type":"虛詞詞解","stem":"「不賂者以賂者喪」中「以」字的詞義和用法是？","options":["介詞，解作因為","介詞，解作拿、用","連詞，解作來","連詞，解作以致"],"answer":"A","explanation":"介詞，解作因為。「不賂者」滅亡的原因是「賂者」，引出原因，下句「蓋失強援」印證了此因果關係。","source":"","demo":false},{"work":"liuguo","type":"虛詞詞解","stem":"「以地事秦」中「以」字的詞義和用法是？","options":["介詞，解作因為","介詞，解作把、用","連詞，解作來","連詞，解作因而"],"answer":"B","explanation":"介詞，解作把、用。「以＋名詞（地）＋動詞（事）」，屬介賓結構作狀語，表示手段與工具。","source":"","demo":false},{"work":"liuguo","type":"虛詞詞解","stem":"「六國互喪」中「互」字的詞義和用法是？","options":["副詞，解作互相","副詞，解作相繼","形容詞，解作交錯","動詞，解作交互"],"answer":"B","explanation":"副詞，解作相繼。六國不是互相攻擊滅亡，而是一個接一個被秦所滅，古今用法有別。","source":"","demo":false},{"work":"liuguo","type":"虛詞詞解","stem":"「率賂秦耶」中「率」字的詞義和用法是？","options":["動詞，解作率領","名詞，解作效率","副詞，解作全都","形容詞，解作輕率"],"answer":"C","explanation":"副詞，解作全都。在動詞「賂」前作狀語，配合下文回答「不賂者以賂者喪」，可知問的是「全都」。","source":"","demo":false},{"work":"liuguo","type":"虛詞詞解","stem":"「苟以天下之大」中「苟」字的詞義和用法是？","options":["副詞，解作苟且","連詞，解作如果","副詞，解作暫且","形容詞，解作微小"],"answer":"B","explanation":"連詞，解作如果。放在句首提出假設條件，後文以「是又在六國下矣」承接假設結果。","source":"","demo":false},{"work":"liuguo","type":"虛詞詞解","stem":"「斯用兵之效也」中「斯」字的詞義和用法是？","options":["指示代詞，解作這","連詞，解作則、就","副詞，解作乃","介詞，解作於"],"answer":"A","explanation":"指示代詞，解作這。放在判斷句句首作主語，回指上文燕國不賂秦而後亡一事。","source":"","demo":false},{"work":"liuguo","type":"虛詞詞解","stem":"「其勢弱於秦」中「於」字的詞義和用法是？","options":["介詞，解作在","介詞，解作向","介詞，解作比","介詞，解作被"],"answer":"C","explanation":"介詞，解作比。「形容詞＋於＋名詞」是文言比較句式，「弱於秦」即「比秦國弱」。","source":"","demo":false},{"work":"liuguo","type":"範文內容","stem":"根據《六國論》，作者認為六國破滅的根本原因是什麼？","options":["兵器不精良","作戰不善","弊在賂秦","刺客不行"],"answer":"C","explanation":"課文開門見山提出中心論點：「六國破滅，非兵不利，戰不善，弊在賂秦。」","source":"","demo":false},{"work":"liuguo","type":"範文內容","stem":"《六國論》中「以地事秦，猶抱薪救火」一句引用了哪一部典籍的古人觀點？","options":["《左傳》","《戰國策》","《史記·魏世家》","《漢書》"],"answer":"C","explanation":"語出《史記·魏世家》，蘇代告知魏王將土地獻給秦國是不智之舉。","source":"","demo":false},{"work":"liuguo","type":"範文內容","stem":"《六國論》一文寫作的真實意圖（主旨）是什麼？","options":["歌頌秦國統括天下之偉業","批評六國君主昏庸無能","借六國破亡舊事諷諭北宋對外妥協割地的政策","總結戰國時代用兵作戰的策略"],"answer":"C","explanation":"採用「以古諷今」手法，因北宋以歲幣與遼、西夏議和，蘇洵憂慮妥協會削弱國力，故借六國舊事諷諭時政。","source":"","demo":false},{"work":"liuguo","type":"範文內容","stem":"根據《六國論》，齊國最終滅亡的原因是？","options":["割地太多致國力耗盡","親附秦國而不助五國，五國既喪，齊孤立無援","刺客刺秦失敗招致滅亡","良將李牧因讒言被誅"],"answer":"B","explanation":"文中指出「與嬴而不助五國也。五國既喪，齊亦不免矣」，說明齊國親附秦國、失卻強援致滅亡。","source":"","demo":false},{"work":"liuguo","type":"修辭手法","stem":"「舉以予人，如棄草芥」運用了什麼修辭手法？","options":["擬人","比喻","借代","頂真"],"answer":"B","explanation":"比喻手法（明喻）。把祖先艱苦取得的土地比作草芥隨意丟棄，突顯六國子孫不愛惜國土。","source":"","demo":false},{"work":"liuguo","type":"修辭手法","stem":"「弊在賂秦。賂秦而力虧」運用了什麼修辭手法？","options":["頂真","對偶","誇張","設問"],"answer":"A","explanation":"頂真手法。前句末尾「賂秦」與後句開頭「賂秦」重疊緊扣，使文句一氣呵成，強調「賂秦」為破滅之源。","source":"","demo":false},{"work":"liuguo","type":"修辭手法","stem":"「與嬴而不助五國也」中以國姓「嬴」指代秦國，運用了什麼修辭手法？","options":["比喻","擬人","借代","對偶"],"answer":"C","explanation":"借代手法。以秦國國姓「嬴」借代秦國本身。","source":"","demo":false},{"work":"liuguo","type":"修辭手法","stem":"「今日割五城，明日割十城」運用了什麼修辭手法？","options":["誇張","頂真","設問","借代"],"answer":"A","explanation":"誇張手法。以誇飾性數字與時間寫割地之頻繁迅速，突顯諸侯割地求和之輕率與割地之多。","source":"","demo":false},{"work":"liuguo","type":"修辭手法","stem":"「或曰：『六國互喪，率賂秦耶？』曰：『不賂者以賂者喪。』」運用了什麼修辭手法？","options":["反問","設問","對偶","頂真"],"answer":"B","explanation":"設問手法。通過自問自答，引出並強調「不賂者以賂者喪」的道理。","source":"","demo":false},{"work":"learn","type":"實詞詞解","stem":"「金就礪則利」中「就」字的詞義是？","options":["成就","靠近、接觸","就任","即使"],"answer":"B","explanation":"動詞，解作靠近、接觸。推測方法：對文推斷，本句與「木受繩則直」句式相同，「就」與「受」位置相同，同是動詞，表示接受加工；結合常識，刀劍放在磨刀石上磨，可推知為靠近、接觸。","source":"","demo":false},{"work":"learn","type":"實詞詞解","stem":"「而致千里」中「致」字的詞義是？","options":["致送","招致","到達","致意"],"answer":"C","explanation":"動詞，解作到達。推測方法：對文與文內互證，與「而絕江河」相對，「絕」是橫渡，「致」亦為動詞；賓語「千里」為路程，可與下文「無以至千里」之「至」互證。","source":"","demo":false},{"work":"learn","type":"實詞詞解","stem":"「非能水也」中「水」字的用法與詞義是？","options":["名詞，解作河流","名詞活用作動詞，解作游泳","形容詞，解作潮濕","副詞，解作如水般"],"answer":"B","explanation":"名詞活用作動詞，解作游泳。推測方法：詞類活用與上下文，「水」在能願動詞「能」之後作謂語，故活用為動詞；結合「假舟楫者」和「絕江河」，可知指游泳。","source":"","demo":false},{"work":"learn","type":"實詞詞解","stem":"「而聞者彰」中「彰」字的詞義是？","options":["表彰","明顯、清晰","文章","彰顯"],"answer":"B","explanation":"形容詞，解作明顯、清晰。推測方法：對文推斷，與「而見者遠」相對，「遠」是形容詞，「彰」亦為形容詞，指聲音傳得遠，使聽的人聽得清楚。","source":"","demo":false},{"work":"learn","type":"虛詞詞解","stem":"「君子博學而日參省乎己」中「而」字的用法是？","options":["連詞，表轉折（卻）","連詞，表修飾","連詞，表遞進或並列（並且）","連詞，表假設"],"answer":"C","explanation":"連詞，解作並且。推測方法：句法分析，「博學」與「參省」為兩個並行且遞進的學習行動。","source":"","demo":false},{"work":"learn","type":"虛詞詞解","stem":"「故不積蹞步，無以至千里」中「無以」的意思是？","options":["沒有用處","無法／沒有用來……的辦法","無須","不以為然"],"answer":"B","explanation":"固定搭配，「無以」等於「無所以」，後接動詞「至」，表示沒有用來達到目的的條件或方法，即無法。","source":"","demo":false},{"work":"learn","type":"修辭手法","stem":"「假輿馬者，非利足也，而致千里；假舟楫者，非能水也，而絕江河」運用了什麼修辭手法？","options":["對偶與借代","設問與擬人","頂真與誇張","層遞與對比"],"answer":"A","explanation":"對偶與借代。句式結構駢偶整齊；「輿」（車廂）借代車輛，「楫」（船槳）借代船隻，屬以部分代整體之借代手法。","source":"","demo":false},{"work":"learn","type":"修辭手法","stem":"文中以「騏驥一躍，不能十步；駑馬十駕，功在不舍」進行論述，屬於何種論證與修辭手法？","options":["比喻論證與對比（映襯）","舉例論證與誇張","引用論證與對偶","類比論證與借代"],"answer":"A","explanation":"比喻論證與對比（映襯）。以千里馬與劣馬為喻，突顯「功在不舍」、堅持不懈的重要性，正面與反面事物互相映襯。","source":"","demo":false},{"work":"learn","type":"範文內容","stem":"荀子在《勸學》中提出「君子生非異也，善假於物也」，旨在說明什麼道理？","options":["君子的先天稟賦遠超一般常人","君子與常人本性無異，成就來自後天學習與善用客觀條件","後天環境對人的影響不大","只有天資聰穎的人才能透過學習成為君子"],"answer":"B","explanation":"承接前文登高而招、順風而呼、假車馬、假舟楫等例子，說明自身條件並未改變，只要善於借助外物（後天學習）就能事半功倍，證明「學不可以已」。","source":"","demo":false},{"work":"learn","type":"範文內容","stem":"根據《勸學》內容，作者以「螾」（蚯蚓）和「蟹」作對比，主要強調學習必須具備什麼態度？","options":["持之以恆","勇於嘗試","專心致志","虛心受教"],"answer":"C","explanation":"蚯蚓無爪牙之利、筋骨之強卻能上食埃土下飲黃泉，是因為「用心一也」；螃蟹條件優越卻無處寄託，是因為「用心躁也」，突顯學習切忌浮躁，必須專一。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「不可以久處約」中「約」字的詞義是？","options":["約定","窮困的境況","簡約","約束"],"answer":"B","explanation":"名詞，解作窮困的境況。推測方法：對偶句中對應位置的字互相推敲，本句與「不可以長處樂」相對，「約」和「樂」位置相同、意思相反，「樂」是安樂，故「約」是窮困。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「仁者安仁」中「安」字的詞義是？","options":["安居","安於","安全","安置"],"answer":"B","explanation":"動詞，解作安於。「安」在名詞「仁」前面帶賓語，故活用為動詞。意指安於仁德，出於本心，自然而然。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「知者利仁」中「利」字的詞類活用及詞義是？","options":["名詞活用為動詞，解作利用","形容詞活用為動詞，解作有利","意動用法，解作知道有利/認為有利","使動用法，解作使……獲利"],"answer":"C","explanation":"詞類活用（意動用法），「利」本是形容詞或名詞，放在賓語「仁」前面活用為動詞，指「認為仁有利」而力行之。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「不以其道得之」中「道」字的詞義是？","options":["道理","正當的方法","道路","說話"],"answer":"B","explanation":"名詞，解作正當的方法。「以其道」即憑藉正當的途徑/方法，可借成語「生財有道」互相印證。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「請事斯語矣」中「事」字的詞義是？","options":["事情","侍奉","實踐","從事"],"answer":"C","explanation":"動詞，解作實踐。「事」後面的賓語是「斯語」（這番話），對於話語只能去「實踐、奉行」。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「生事之以禮」中「事」字的詞義是？","options":["實踐","侍奉","事業","安排"],"answer":"B","explanation":"動詞，解作侍奉。賓語「之」指代父母，對於父母應解作「侍奉」。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「有殺身以成仁」中「成」字的詞義是？","options":["成就","促成","成全","完成"],"answer":"C","explanation":"動詞，解作成全。對偶句中的反義對舉：本句與「無求生以害仁」相對，「成」與「害」意思相反，故解作成全。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「勞而不怨」中「勞」字的詞義是？","options":["勞苦","憂愁","勤勞","功勞"],"answer":"B","explanation":"動詞，解作憂愁。古今異義：與「怨」用「而不」連接，皆屬內心情緒，指勸諫父母不被接受時，子女心中憂愁卻不怨恨。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「父母之年，不可不知也」中「年」字的詞義是？","options":["年份","收成","年歲/年紀","時代"],"answer":"C","explanation":"名詞，解作年歲。聯繫下文「一則以喜，一則以懼」，喜父母長壽、怕父母衰老，可知「年」指年紀。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「君子不重則不威」中「重」與「威」的詞義分別是？","options":["沉重；威脅","莊重；威嚴","重視；威力","嚴重；權勢"],"answer":"B","explanation":"形容詞，「重」解作莊重，「威」解作威嚴。條件句式：指人不莊重就沒有威嚴。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「主忠信」中「主」字的詞類活用及詞義是？","options":["名詞，解作君主","動詞（意動用法），解作以……為主/堅守","形容詞，解作主要的","副詞，解作主觀"],"answer":"B","explanation":"名詞活用作動詞（意動用法），「主」在賓語「忠信」前面，指「以忠信為主/堅守忠信」。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「無友不如己者」中「友」字的詞類活用及詞義是？","options":["名詞，解作朋友","動詞，解作結交朋友","形容詞，解作友善","副詞，解作友好地"],"answer":"B","explanation":"名詞活用作動詞，名詞「友」在否定副詞「無」後面，帶賓語「不如己者」，解作「結交朋友」。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「君子恥其言而過其行」中「過」字的詞義是？","options":["過錯","經過","超越/超過","過分"],"answer":"C","explanation":"動詞，解作超越、超過。「恥其言」與「過其行」並列，指以話說得多為恥，行動要超過說話。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「過則勿憚改」中「過」與「憚」的詞義分別是？","options":["經過；害怕","犯錯；畏難/害怕","過分；簡單","超越；擔當"],"answer":"B","explanation":"「過」為動詞解作犯錯；「憚」為動詞解作畏難、害怕（可借成語「肆無忌憚」推銷）。全句指有了過錯就不要害怕改正。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「君子病無能焉」中「病」字的詞義是？","options":["生病","憂慮/擔心","痛苦","缺點"],"answer":"B","explanation":"古今異義，動詞解作憂慮、擔心。後接抽象賓語「無能」，且對照下句「不病人之不己知也」，可知指內心的憂慮。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「克己復禮為仁」中「克」與「復」的詞義分別是？","options":["克服；重複","克制/戰勝；回復/返回","能；復興","約束；複雜"],"answer":"B","explanation":"動詞，「克」指克制、戰勝私欲；「復」指回復、返回到禮的規範。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「事父母幾諫」中「幾」字的詞義是？","options":["幾乎","幾時","輕微/委婉","多次"],"answer":"C","explanation":"副詞，讀音〔基〕（gei1），解作輕微、委婉。修飾動詞「諫」，指侍奉父母時若勸諫要用輕微委婉的態度。","source":"","demo":false},{"work":"lunyu","type":"實詞詞解","stem":"「內省不疚」中「疚」字的詞義是？","options":["疾病","愧疚","痛苦","過失"],"answer":"B","explanation":"形容詞，解作愧疚。配合上文「內省」（自我反省），指反省自己而沒有愧疚。","source":"","demo":false},{"work":"lunyu","type":"虛詞詞解","stem":"「惡乎成名？」中「惡」字的讀音及詞性詞義是？","options":["讀 ok3，名詞：壞事","讀 wu3，動詞：厭惡","讀 wu1，疑問代詞：怎麼","讀 ok3，形容詞：凶惡"],"answer":"C","explanation":"讀〔烏〕（wu1），疑問代詞。「惡乎」為固定搭配，解作「於何/怎麼」。","source":"","demo":false},{"work":"lunyu","type":"虛詞詞解","stem":"「夫何憂何懼？」中「夫」字的讀音及詞性是？","options":["讀 fu1，名詞：成年男子","讀 fu4，連詞：那麼","讀 fu1，代詞：那個","讀 fu4，語氣助詞：吧"],"answer":"B","explanation":"讀〔扶〕（fu4），句首發語詞/連詞，承接上文「內省不疚」引出結論，解作「那麼」。","source":"","demo":false},{"work":"lunyu","type":"虛詞詞解","stem":"「不以其道得之」中「以」字的詞性及詞義是？","options":["連詞：因為","介詞：憑藉/用","連詞：用來","動詞：以為"],"answer":"B","explanation":"介詞，後面接名詞短語「其道」，表示憑藉正當的方法/途徑。","source":"","demo":false},{"work":"lunyu","type":"虛詞詞解","stem":"「無求生以害仁」中「以」字的詞性及詞義是？","options":["介詞：依照","連詞：因而/以致","介詞：憑藉","連詞：並且"],"answer":"B","explanation":"連詞，連接「求生」與「害仁」兩個動詞短語，表示前因導致後果，解作「因而」。","source":"","demo":false},{"work":"lunyu","type":"虛詞詞解","stem":"「生事之以禮」中「以」字的用法是？","options":["介詞後置，解作「依照」","連詞，表示目的","動詞，解作「以為」","連詞，表示轉折"],"answer":"A","explanation":"介詞短語後置（「以禮」），解作「依照」，即依照禮節來侍奉父母。","source":"","demo":false},{"work":"lunyu","type":"虛詞詞解","stem":"「君子義以為質」中「以」字與句式的關係是？","options":["連詞，表示遞進","介詞賓語前置，「義以」即「以義」","動詞，解作用","副詞，解作已經"],"answer":"B","explanation":"屬「以……為……」固定句式，句中「義以」為「以義」的賓語前置倒裝，即「把義當作本質」。","source":"","demo":false},{"work":"lunyu","type":"虛詞詞解","stem":"「為仁由己，而由人乎哉？」中「而」字的詞義是？","options":["連詞：而且","副詞：難道","代詞：你","連詞：順接"],"answer":"B","explanation":"副詞，在句首配合句末反問語氣「乎哉」，解作「難道」。","source":"","demo":false},{"work":"lunyu","type":"通假字","stem":"「孫以出之」中「孫」字通什麼字？詞義為何？","options":["通「損」，損耗","通「遜」，謙遜","通「遵」，遵守","通「迅」，迅速"],"answer":"B","explanation":"通假字（字形部件與讀音相近），「孫」通「遜」，形容詞，解作謙遜。與義、禮、信並列為德行。","source":"","demo":false},{"work":"lunyu","type":"通假字","stem":"「無違」中「無」字通什麼字？","options":["通「毋」，解作「不要」","通「舞」，解作「舞蹈」","通「無」，解作「沒有」","通「微」，解作「隱微」"],"answer":"A","explanation":"通假字（音同），「無」通「毋」，副詞，在動詞「違」前屬祈使禁止語氣，解作「不要」。","source":"","demo":false},{"work":"lunyu","type":"範文內容","stem":"孔子認為「孝道」與供給犬馬飲食最大的分別是什麼？","options":["物質豐厚","順從聽話","內心恭敬（敬）","葬之以禮"],"answer":"C","explanation":"課文指出「今之孝者，是謂能養。至於犬馬，皆能有養；不敬，何以別乎！」說明孝道關鍵在於內心有敬意。","source":"","demo":false},{"work":"lunyu","type":"範文內容","stem":"關於父母的年歲，孔子認為子女的心態應該是怎樣的？","options":["憂慮與悲傷","一則以喜，一則以懼","順其自然","麻木無感"],"answer":"B","explanation":"課文記載「父母之年，不可不知也。一則以喜，一則以懼。」喜父母長壽，懼父母衰老。","source":"","demo":false},{"work":"lunyu","type":"範文內容","stem":"當父母不接受自己的勸諫時，孝子應該如何處理？","options":["據理力爭，大聲斥責","見志不從，又敬不違，勞而不怨","放棄勸諫，置之不理","向親友抱怨父母的過失"],"answer":"B","explanation":"課文指出「事父母幾諫，見志不從，又敬不違，勞而不怨」，即父母不聽從時仍保持恭敬不冒犯，心中憂愁而不怨恨。","source":"","demo":false},{"work":"lunyu","type":"範文內容","stem":"根據課文，君子與小人在面對錯誤和反省時有何不同？","options":["君子求諸己，小人求諸人","君子掩飾錯誤，小人勇於改過","君子求諸人，小人求諸己","兩人皆不作反省"],"answer":"A","explanation":"課文記載「君子求諸己，小人求諸人」，君子犯錯反省自己，小人犯錯責怪他人。","source":"","demo":false},{"work":"lunyu","type":"修辭手法","stem":"「非禮勿視，非禮勿聽，非禮勿言，非禮勿動」運用了什麼修辭手法？","options":["對偶","排比","層遞","對比"],"answer":"B","explanation":"連續四個結構相同、意思相關的短句排列，增強句子節奏與氣勢，屬於排比修辭。","source":"","demo":false},{"work":"lunyu","type":"修辭手法","stem":"「君子坦蕩蕩，小人長戚戚」運用了什麼修辭手法？","options":["對比與對偶","比喻與誇張","排比與反問","頂真與借代"],"answer":"A","explanation":"將君子與小人的心理狀態作正反「對比」，同時兩句句式結構對稱整齊，兼具「對偶」。","source":"","demo":false},{"work":"lunyu","type":"修辭手法","stem":"「至於犬馬，皆能有養；不敬，何以別乎！」運用了什麼修辭手法及其作用？","options":["設問；自問自答帶出觀點","反問；加強語氣，強調不敬父母與飼養犬馬無異","誇張；極言犬馬的聰明","擬人；把犬馬人性化"],"answer":"B","explanation":"運用反問（詰問），答案已包含在問題中，用以加強語氣，引起反思，突顯孝道的核心在於敬。","source":"","demo":false},{"work":"lunyu","type":"修辭手法","stem":"「君子無終食之間違仁，造次必於是，顛沛必於是」中，「終食之間」、「造次」、「顛沛」主要運用了什麼手法？","options":["排比與對偶","借代與誇張","比喻與層遞","頂真與擬人"],"answer":"C","explanation":"以「一頓飯的時間」比喻極短暫的時間，並由平常片刻（終食之間）推進到急迫倉卒（造次），再推進到流離困頓（顛沛），屬於層遞手法。","source":"","demo":false},{"work":"fish","type":"實詞詞解","stem":"「二者不可得兼」中「兼」字的詞義是？","options":["兼顧","同時、一併","加倍","牽連"],"answer":"B","explanation":"副詞，解作同時、一併。字形像一手同時持兩棵禾，引申為同時具有兩者。","source":"","demo":false},{"work":"fish","type":"實詞詞解","stem":"「萬鍾則不辯禮義而受之」中「鍾」字的詞義是？","options":["樂器名","集中、專一","古代容量單位，借指優厚的俸祿","情感聚集"],"answer":"C","explanation":"量詞，本指酒器，後引申為古代容量單位，「萬鍾」極言其多，借指高官厚祿。","source":"","demo":false},{"work":"fish","type":"實詞詞解","stem":"「故患有所不辟也」中「辟」字的詞義是？","options":["開闢","偏僻","法度","躲避、避開"],"answer":"D","explanation":"動詞，通「避」，解作躲避。聯繫上下文可知面對禍患時不避開。","source":"","demo":false},{"work":"fish","type":"虛詞詞解","stem":"「由是則生而有不用也」中「而」字的用法和詞義是？","options":["連詞，表示承接，解作「然後」","連詞，表示轉折，解作「卻」","連詞，表示修飾，無實義","連詞，表示遞進，解作「而且」"],"answer":"B","explanation":"連詞，表示轉折。前半句說有可以求生的方法，後半句說卻不用，前後意思相反。","source":"","demo":false},{"work":"fish","type":"虛詞詞解","stem":"「所欲有甚於生者」中「於」字的用法是？","options":["介詞，表示引出動作對象","介詞，表示比較","介詞，表示被動","介詞，表示時間或地點"],"answer":"B","explanation":"介詞，表示比較。「甚於」為「形容詞＋於」的比較句式，指「比生命更重要」。","source":"","demo":false},{"work":"fish","type":"範文內容","stem":"孟子在文中以「魚與熊掌」為喻，目的何在？","options":["說明飲食衛生的重要性","引出「捨生取義」的中心論點","批判社會上貪婪不厭的人","強調物質享受的高下之分"],"answer":"B","explanation":"孟子以熊掌比魚更難得，比喻義比生更可貴，從而引出二者不可得兼時應「捨生取義」。","source":"","demo":false},{"work":"fish","type":"範文內容","stem":"文中「乞人不屑也」的原因是甚麼？","options":["食物已經腐爛變質","乞丐自身並不飢餓","施捨者態度無禮、帶有侮辱性","施捨的食物份量太少"],"answer":"C","explanation":"「蹴爾而與之」，施捨者用腳踐踏過才給予，乞丐因羞惡之心認為受到侮辱而不屑接受。","source":"","demo":false},{"work":"fish","type":"修辭手法","stem":"「鄉為身死而不受，今為宮室之美為之……」運用了什麼修辭手法？","options":["比喻與誇張","排比與反復","設問與對偶","借代與擬人"],"answer":"B","explanation":"連用三次「鄉為身死而不受，今為……為之」，結構相同且關鍵句反復出現，屬於排比與反復。","source":"","demo":false},{"work":"niannu","type":"實詞詞解","stem":"「故壘西邊」中「故」字的詞義是？","options":["緣故","昔日的、舊日的","故意","死亡"],"answer":"B","explanation":"形容詞；放在名詞「壘」前作修飾語，意指昔日的營壘。可聯繫下文「故國神遊」與熟詞「故人」、「故鄉」類推。","source":"","demo":false},{"work":"niannu","type":"實詞詞解","stem":"「人道是、三國周郎赤壁」中「道」字的詞義是？","options":["道路","道理","說","引導"],"answer":"C","explanation":"動詞；在主語「人」之後作謂語，解作「說」。可以熟詞「能說會道」、「道聽途說」類推。","source":"","demo":false},{"work":"niannu","type":"實詞詞解","stem":"「雄姿英發」中「英」字的詞義是？","options":["花朵","英俊、傑出","英雄","精華"],"answer":"B","explanation":"形容詞；「雄姿」與「英發」並列，形容才華英氣勃發顯露。可以熟詞「英俊」、「英才」類推。","source":"","demo":false},{"work":"niannu","type":"實詞詞解","stem":"「浪淘盡」中「淘」字的詞義是？","options":["沖刷、汰洗","淘氣","挖空","尋找"],"answer":"A","explanation":"動詞；主語為「浪」，賓語為「千古風流人物」，意為江浪沖刷淘汰，比喻歷史的淘汰。可由熟詞「淘金」、「淘汰」類推。","source":"","demo":false},{"work":"niannu","type":"實詞詞解","stem":"「故壘西邊」中「壘」字的詞義是？","options":["堆積","營壘","重疊","牆壁"],"answer":"B","explanation":"名詞；「壘」字從土，指古代軍隊駐紮時築起的防禦工事。可由熟詞「堡壘」、「壁壘」類推。","source":"","demo":false},{"work":"niannu","type":"實詞詞解","stem":"「亂石穿空」中「穿」字的詞義是？","options":["穿著","鑿通","直插、穿入","看透"],"answer":"C","explanation":"動詞；與「驚濤拍岸」對偶，「穿」與「拍」相對，形容陡峭的山石高聳直插高空。","source":"","demo":false},{"work":"niannu","type":"實詞詞解","stem":"「一尊還酹江月」中「酹」字的詞義是？","options":["洗滌","以酒灑地而祭","傾倒","吟詠"],"answer":"B","explanation":"動詞；字從「酉」，與酒有關。古人祭祀或憑弔時把酒灑在地上表示敬意稱為「酹」。","source":"","demo":false},{"work":"niannu","type":"實詞詞解","stem":"「浪淘盡、千古風流人物」中「風流」的詞義是？","options":["男女情事放蕩","傑出不凡、才華出眾而影響一時的","隨風飄流","風氣流傳"],"answer":"B","explanation":"形容詞；古今異義詞。聯繫下文「一時多少豪傑」，可知指英雄豪傑。","source":"","demo":false},{"work":"niannu","type":"虛詞詞解","stem":"「小喬初嫁了」中「初」字的詞性及詞義是？","options":["名詞；開頭","副詞；剛剛、才","形容詞；原初的","介詞；在……時候"],"answer":"B","explanation":"副詞；在動詞「嫁」之前作修飾語，表示時間。可以熟詞「初來乍到」、「初出茅廬」類推。","source":"","demo":false},{"work":"niannu","type":"虛詞詞解","stem":"「多情應笑我」中「應」字的詞性及詞義是？","options":["動詞；應答","動詞；答應","副詞；想必、應該（表示推測）","介詞；順應"],"answer":"C","explanation":"副詞；在動詞「笑」之前，表示推測語氣。詞人想像別人會笑自己，故屬推測。","source":"","demo":false},{"work":"niannu","type":"虛詞詞解","stem":"「早生華髮」中「早」字的詞性及詞義是？","options":["名詞；早晨","副詞；過早地","形容詞；先前的","動詞；提早"],"answer":"B","explanation":"副詞；在動詞「生」之前作修飾語。聯繫上下文與周瑜少年得志對照，可知解作過早地。","source":"","demo":false},{"work":"niannu","type":"虛詞詞解","stem":"「一尊還酹江月」中「還」字的詞性及詞義是？","options":["動詞；歸還","副詞；姑且、還是（帶自我寬解語氣）","動詞；環繞","副詞；依然"],"answer":"B","explanation":"副詞；在動詞「酹」前作修飾語。承接「人間如夢」，表現由感慨轉為自我寬解的語氣。","source":"","demo":false},{"work":"niannu","type":"虛詞詞解","stem":"「一時多少豪傑！」中「多少」的詞義是？","options":["疑問代詞；若干、多少數量","形容詞；多麼多、許多（表示感嘆）","副詞；稍微","名詞；數量大小"],"answer":"B","explanation":"形容詞；句末用感嘆號，承接「江山如畫」而來，表示對三國英雄人才輩出的感嘆而非發問。","source":"","demo":false},{"work":"niannu","type":"修辭手法","stem":"「江山如畫」與「人間如夢」運用了什麼修辭手法？","options":["暗喻","借喻","明喻","借代"],"answer":"C","explanation":"兩句皆使用比喻詞「如」，分別以圖畫比喻江山、以夢比喻人世，屬於明喻。","source":"","demo":false},{"work":"niannu","type":"修辭手法","stem":"「捲起千堆雪」中「雪」運用了什麼修辭手法？","options":["明喻","借喻","誇張","擬人"],"answer":"B","explanation":"直接以「雪」本物不出現，借指潔白翻湧的浪花，本體與比喻詞皆省略，屬於借喻。","source":"","demo":false},{"work":"niannu","type":"修辭手法","stem":"「羽扇綸巾」運用了什麼修辭手法？","options":["借喻","誇張","借代","象徵"],"answer":"C","explanation":"以周瑜的服飾裝束「羽扇」和「綸巾」代指周瑜本人，突出其儒雅形象，屬於借代。","source":"","demo":false},{"work":"niannu","type":"修辭手法","stem":"「檣櫓灰飛煙滅」中「檣櫓」運用了什麼修辭手法？","options":["借代","明喻","擬人","對偶"],"answer":"A","explanation":"「檣」（桅杆）與「櫓」（船槳）是戰船的部分，以部分代指整體（戰船及曹軍水軍），屬於借代。","source":"","demo":false},{"work":"niannu","type":"修辭手法","stem":"「亂石穿空，驚濤拍岸」運用了什麼修辭手法？","options":["頂真與設問","對偶與誇張","明喻與借代","倒裝與感嘆"],"answer":"B","explanation":"兩句對仗工整（對偶）；同時「穿空」誇大了山石高聳的氣勢（誇張）。","source":"","demo":false},{"work":"niannu","type":"修辭手法","stem":"「多情應笑我」運用了什麼句式修辭？","options":["設問","反問","倒裝","互文"],"answer":"C","explanation":"原序應為「應笑我多情」，將賓語/補語前置，帶有自嘲意味，屬於倒裝句。","source":"","demo":false},{"work":"niannu","type":"範文內容","stem":"根據《念奴嬌·赤壁懷古》，作者寫黃州赤壁時用「人道是」三字，有何作用？","options":["強調自己親身證實了戰場原址","帶有傳疑口吻，表示只是依從傳說寫作","批評當地人的說法不可靠","引出曹操的豪邁氣概"],"answer":"B","explanation":"「人道是」意即「人們說是」，表明詞人知道黃州赤壁磯非赤壁之戰實址，僅順從傳說憑弔。","source":"","demo":false},{"work":"niannu","type":"範文內容","stem":"《念奴嬌·赤壁懷古》下闋中，作者刻劃周瑜「小喬初嫁了」、「羽扇綸巾」，主要是為了什麼？","options":["讚美小喬的美貌動人","描寫三國時期服飾特色","突出周瑜年少得志與儒將風貌，反襯自己功業未成、老大無為","說明諸葛亮的指揮若定"],"answer":"C","explanation":"詞人以周瑜三十四歲立大功的英雄姿態，反襯自己年近半百、貶官黃州、早生華髮的處境。","source":"","demo":false},{"work":"niannu","type":"範文內容","stem":"《念奴嬌·赤壁懷古》全詞在聲韻配合上有何特點？","options":["押平聲韻，音調柔美舒緩","押入聲韻，聲調短促剛勁，配合豪放詞風","換韻頻繁，表現心境起伏","完全不押韻，注重句式錯落"],"answer":"B","explanation":"全詞押入聲韻（物、壁、雪、傑、發、滅、髮、月），音節短促剛勁，增強豪放雄壯的情調。","source":"","demo":false},{"work":"niannu","type":"範文內容","stem":"《念奴嬌·赤壁懷古》最後以「一尊還酹江月」作結，抒發了作者怎樣的情懷？","options":["執着於功名利祿，心生怨恨","體悟世事如夢，以曠達態度自我寬解並遣懷","決心重回朝廷，再幹一番事業","悲傷過度，感嘆人生徹底絕望"],"answer":"B","explanation":"由「人間如夢」轉入灑酒祭月，表達個人得失不必執着，呈現出蘇軾特有的曠達胸懷。","source":"","demo":false},{"work":"sheng","type":"實詞詞解","stem":"「三杯兩盞淡酒，怎敵他晚來風急！」中「敵」字的詞義是？","options":["仇敵","抵擋","匹敵","對抗"],"answer":"B","explanation":"動詞，解作抵擋、抵得住。推測方法：判斷詞性和句法位置，「敵」前有疑問代詞「怎」修飾，後接賓語「他（晚來風急）」，位於謂語位置，應作動詞。聯繫上下文，淡酒與急風相對，可推知為抵擋寒風。","source":"","demo":false},{"work":"sheng","type":"實詞詞解","stem":"「如今有誰堪摘？」中「堪」字的詞義是？","options":["忍受","勝任","值得、能夠","經受"],"answer":"C","explanation":"動詞（能願動詞），解作可以、能夠、值得。推測方法：「堪」位於動詞「摘」之前，屬「能願動詞＋動詞」結構。聯繫上下文，上句寫黃花「憔悴損」，可推知花已憔悴不值得摘。","source":"","demo":false},{"work":"sheng","type":"實詞詞解","stem":"「這次第，怎一箇愁字了得！」中「了」字的詞義是？","options":["明白","結束","概括得了、說得盡","助詞，表示完成"],"answer":"C","explanation":"動詞，解作了結、概括得了、說得盡。推測方法：「了得」為固定搭配，係濟南章丘方言口語，「得」表示能否，「了」為動詞。聯繫上下文，「怎一箇愁字」構成反問，推知為一個愁字怎能概括。","source":"","demo":false},{"work":"sheng","type":"實詞詞解","stem":"「這次第，怎一箇愁字了得！」中「次第」的詞義是？","options":["次序、等級","依次、按照順序","光景、情形","排在後面的位置"],"answer":"C","explanation":"名詞，解作光景、情形、狀況。推測方法：觀察固定搭配，「次第」二字連用不宜拆解；前有指示代詞「這」，推知為名詞，總括上文寫到的種種愁景。","source":"","demo":false},{"work":"sheng","type":"實詞詞解","stem":"「最難將息」中「將息」的讀音與詞義分別是？","options":["讀〔醬〕zoeng3，將領休息","讀〔章〕zoeng1，將要休息","讀〔章〕zoeng1，調養、休養","讀〔醬〕zoeng3，率領休息"],"answer":"C","explanation":"動詞，讀〔章〕zoeng1，解作調養、休息。推測方法：「將息」為唐宋民間方言，在「最難」之後作謂語。聯繫上文「乍煖還寒時候」，天氣無常故身體難以調養。","source":"","demo":false},{"work":"sheng","type":"虛詞詞解","stem":"「乍煖還寒時候」中「乍」字的詞性及詞義是？","options":["形容詞，初次的","副詞，剛剛、忽然","連詞，假設","介詞，在……時候"],"answer":"B","explanation":"副詞，解作剛剛、忽然。推測方法：「乍……還……」為常見對舉句式，「乍」位於形容詞「煖」之前作狀語，故為副詞，表示冷暖氣溫的瞬間轉變。","source":"","demo":false},{"work":"sheng","type":"虛詞詞解","stem":"「梧桐更兼細雨」中「更」字的讀音、詞性及詞義是？","options":["讀 gang1，動詞，更改","讀 gang3，副詞，又、再、更加","讀 gang1，名詞，夜間計時單位","讀 gang3，連詞，並且"],"answer":"B","explanation":"副詞，讀 gang3，解作又、再、更加。推測方法：「更」位於動詞「兼」之前作狀語，修飾動作，應為副詞。「更兼」為固定搭配，意為「再加上」。","source":"","demo":false},{"work":"sheng","type":"虛詞詞解","stem":"「怎敵他晚來風急！」中「他」字的用法是？","options":["代詞，指代作者的亡夫","代詞，複指「晚來風急」","代詞，指代路過的行人","助詞，用於句中協調音節"],"answer":"B","explanation":"代詞，位於動詞「敵」之後作賓語，在此複指後文的「晚來風急」，帶有口語色彩並加強語氣。聯繫上下文，句中可抵擋的對象只有急風。","source":"","demo":false},{"work":"sheng","type":"虛詞詞解","stem":"「卻是舊時相識」中「卻」字的詞義是？","options":["退後","但是","竟然、原來","拒絕"],"answer":"C","explanation":"副詞，解作竟然、原來。推測方法：「卻」位於判斷動詞「是」之前作狀語。聯繫上句「正傷心」，表示飛過的雁竟然是舊日相識，出乎意料。","source":"","demo":false},{"work":"sheng","type":"修辭手法","stem":"「滿地黃花堆積，憔悴損」運用了什麼修辭手法？","options":["擬人與誇張","雙關","暗喻與借代","頂真"],"answer":"B","explanation":"運用了雙關手法。「憔悴損」兼具兩層意思：表面寫黃花凋零損壞，深層寄託詞人飽受國破、喪夫與流離之苦，身心極度憔悴。","source":"","demo":false},{"work":"sheng","type":"修辭手法","stem":"「怎敵他晚來風急！」、「如今有誰堪摘？」、「獨自怎生得黑！」連用問句屬於什麼修辭手法？","options":["設問","反問","疑問","互文"],"answer":"B","explanation":"運用了反問手法。全詞連用四個反問句（包括「怎一箇愁字了得！」），一層緊逼一層，表達無法排解的悲愁與孤寂感。","source":"","demo":false},{"work":"sheng","type":"修辭手法","stem":"「雁過也，正傷心，卻是舊時相識」在情感表達上主要運用了什麼手法？","options":["借景抒情與象徵","對比與誇張","動靜結合","虛實相生"],"answer":"A","explanation":"借景抒情與象徵。大雁象徵傳遞書信的信使及北方故鄉的訊息；借北雁南飛引起對亡夫的懷念、故國之思以及孤寂無伴的愁緒。","source":"","demo":false},{"work":"sheng","type":"範文內容","stem":"關於《聲聲慢·秋情》開首「尋尋覓覓，冷冷清清，悽悽慘慘戚戚」十四字的藝術特色，下列敘述何者正確？","options":["運用連用七組疊字，由內到外描寫寫景手法","使用了大量唇音與濁音，營造宏亮節奏","張端義讚其筆法如「公孫大娘舞劍手」","屬於唐代典型的邊塞詩風格"],"answer":"C","explanation":"宋人張端義在《貴耳集》中稱讚此開首連用七組疊字十四字的筆法如「公孫大娘舞劍手」，層層遞進，由外而內表現悲痛悽戚。","source":"","demo":false},{"work":"sheng","type":"範文內容","stem":"下列哪一項不是《聲聲慢·秋情》中使用的口語或方言？","options":["將息","怎生","了得","次第"],"answer":"D","explanation":"根據課文表解，「將息」是唐宋民間方言，「怎生」是宋代口語，「了得」是濟南章丘方言。「次第」則是唐宋口語中引申的名詞（光景、情形）。","source":"","demo":false},{"work":"sheng","type":"範文內容","stem":"清人彭孫遹在《金粟詞話》中如何評價李清照《聲聲慢·秋情》？","options":["俱無斧鑿痕，不許第二人押","皆用淺俗之語，發清新之思","後幅一片神行，愈唱愈妙","此道本色當行第一人"],"answer":"B","explanation":"彭孫遹《金粟詞話》評曰：「皆用淺俗之語，發清新之思，詞意並工，閨情絕調。」讚賞其善用淺白口語入詞。","source":"","demo":false},{"work":"tower","type":"實詞詞解","stem":"「花近高樓傷客心」中「客」字的詞義是？","options":["賓客","客居異鄉的人（詩人自指）","刺客","門客"],"answer":"B","explanation":"名詞；「客」受「傷」支配，本指「寄居、作客」，引申為「旅居他鄉的人」。杜甫晚年漂泊入蜀，客居成都，故自稱「客」。","source":"","demo":false},{"work":"tower","type":"實詞詞解","stem":"「萬方多難此登臨」中「臨」字的詞義是？","options":["靠近","光臨","登高遠望","面臨"],"answer":"C","explanation":"動詞；本指「從高處往下看」，「登臨」為常見搭配，指登高遠眺；聯繫詩題《登樓》，可知是在高樓上俯瞰遠望。","source":"","demo":false},{"work":"tower","type":"實詞詞解","stem":"「可憐後主還祠廟」中「可憐」的意思是？","options":["值得同情","可愛","可嘆、可悲","幸好"],"answer":"C","explanation":"形容詞；古今異義。結合劉禪寵信宦官、亡國、樂不思蜀等史實，可知此處是詩人對劉禪亡國下場的感歎與批評，解作「可嘆」。","source":"","demo":false},{"work":"tower","type":"實詞詞解","stem":"「可憐後主還祠廟」中「還」字的詞義是？","options":["依然、仍然","回還、返回","還有","環繞"],"answer":"B","explanation":"動詞；「還」後接名詞「祠廟」，構成動賓結構，作動詞「回到」解。劉禪死於洛陽且樂不思蜀，祠廟卻在蜀中，故稱「還祠廟」。","source":"","demo":false},{"work":"tower","type":"實詞詞解","stem":"「北極朝廷終不改」中「北極」比喻什麼？","options":["北方邊境","地球的北極","朝廷","吐蕃君主"],"answer":"C","explanation":"名詞；古人以北極星（北辰）比喻君主或朝廷，取「居其所而眾星共之」之意，詩人以此比喻唐朝朝廷尊安穩固。","source":"","demo":false},{"work":"tower","type":"實詞詞解","stem":"「西山寇盜莫相侵」中「寇盜」指的是？","options":["民間小偷","侵略的外敵（吐蕃）","綠林好漢","朝中奸臣"],"answer":"B","explanation":"名詞；結合「相侵」及吐蕃陷三州的史實，西山為蜀通吐蕃之要道，可知「寇盜」指入侵的敵軍吐蕃。","source":"","demo":false},{"work":"tower","type":"實詞詞解","stem":"「日暮聊為梁甫吟」中「吟」字的詞義是？","options":["吟唱（動詞）","呻吟（動詞）","古代詩歌體裁/樂府曲名（名詞）","感嘆（動詞）"],"answer":"C","explanation":"名詞；「吟」在動詞「為」之後，與「梁甫」組成曲名（樂府《梁甫吟》）作賓語，指詩歌體裁。","source":"","demo":false},{"work":"tower","type":"虛詞詞解","stem":"「北極朝廷終不改」中「終」字的用法與詞義是？","options":["名詞；終結","副詞；終究、畢竟","形容詞；整整的","連詞；如果"],"answer":"B","explanation":"副詞；位於動詞短語「不改」前作狀語，聯繫吐蕃陷京後代宗復位史實，指唐朝經歷危機後結果「終究」沒有改易。","source":"","demo":false},{"work":"tower","type":"虛詞詞解","stem":"「萬方多難此登臨」中「此」字的用法和意思是什麼？","options":["代詞；這裏（指高樓）","連詞；因此","副詞；此時","助詞；無義"],"answer":"A","explanation":"代詞；置於動詞「登臨」前作狀語，表示處所，代指這座高樓（在此登臨）。","source":"","demo":false},{"work":"tower","type":"虛詞詞解","stem":"「西山寇盜莫相侵」中「莫」字的詞義與語氣是？","options":["代詞；沒有誰","副詞；不要（表示告誡、禁止）","副詞；不能","形容詞；昏暗"],"answer":"B","explanation":"副詞；用於祈使句中表示告誡與禁止的語氣，譯為「不要」。","source":"","demo":false},{"work":"tower","type":"虛詞詞解","stem":"「西山寇盜莫相侵」中「相」字的用法是？","options":["副詞；表示互相","名詞；宰相","動詞；輔佐","副詞；偏指一方（動作施及我方）"],"answer":"D","explanation":"副詞；入侵為吐蕃對唐朝的單方面行為，非雙方互相侵犯，故「相」偏指一方（我方/唐朝）。","source":"","demo":false},{"work":"tower","type":"虛詞詞解","stem":"「日暮聊為梁甫吟」中「聊」字的詞義是？","options":["形容詞；無聊","動詞；聊天","副詞；姑且、暫且","動詞；依賴"],"answer":"C","explanation":"副詞；用在動詞「為」前作狀語，配合日暮蒼涼氛圍及抱負難伸之境，表示權且、姑且之意。","source":"","demo":false},{"work":"tower","type":"範文內容","stem":"《登樓》一詩的「詩眼」是哪一個字？","options":["花","難","傷","變"],"answer":"C","explanation":"「傷」為全詩詩眼，全詩的景物、時事議論與個人抱負均圍繞此感傷之情展開。","source":"","demo":false},{"work":"tower","type":"範文內容","stem":"「可憐後主還祠廟」一句，詩人藉劉禪暗諷當時的哪位皇帝與宦官？","options":["唐玄宗與高力士","唐代宗與程元振","唐肅宗與李輔國","唐德宗與仇士良"],"answer":"B","explanation":"詩人藉蜀漢劉禪寵信黃皓致亡國，暗諷唐代宗信任宦官程元振，導致吐蕃入寇時狼狽出逃。","source":"","demo":false},{"work":"tower","type":"範文內容","stem":"詩人於尾聯提到「日暮聊為梁甫吟」，主要是寄託了什麼情感？","options":["懷念諸葛亮並寄託求賢挽局與自身身世之感","歸隱田園的閒適之情","對後主劉禪的深深同情","征戰沙場的豪情壯志"],"answer":"A","explanation":"諸葛亮好為《梁甫吟》，杜甫借吟此曲懷念孔明，希望朝廷起用賢才挽救危局，同時自傷不被重用。","source":"","demo":false},{"work":"tower","type":"修辭手法","stem":"「花近高樓傷客心」運用了什麼表現手法（修辭）？","options":["明喻","反襯（以樂景寫哀情）","頂真","誇張"],"answer":"B","explanation":"以繁花似錦的樂景，反襯詩人客居異鄉、國家多難的悲傷情感，即以樂景寫哀情。","source":"","demo":false},{"work":"tower","type":"修辭手法","stem":"「北極朝廷終不改」使用了什麼修辭手法？","options":["借代/比喻（以北極星比喻朝廷）","擬人","設問","排比"],"answer":"A","explanation":"以北極星居其所而眾星拱之的典故，比喻唐朝朝廷尊安穩固。","source":"","demo":false},{"work":"tower","type":"修辭手法","stem":"頷聯「錦江春色來天地，玉壘浮雲變古今」在對仗上有何特點？","options":["名詞對動詞，正對","前後句意思相對（常與變），構成反對與對比","流水對","扇面對"],"answer":"B","explanation":"「錦江春色」代表常新與永恆，「玉壘浮雲」代表動盪與變幻，兩句意思相對，屬於「反對」，構成對比。","source":"","demo":false},{"work":"qingyu","type":"實詞詞解","stem":"「寶馬雕車香滿路」中「雕」字的詞義是？","options":["大雁","經雕飾的、有雕花彩繪的","雕刻的動作","簡陋的"],"answer":"B","explanation":"動詞用作定語，解作經雕飾的。「雕」在名詞「車」之前，作修飾成分，說明車的特點，與「寶馬」對照，寫車之華美。15","source":"","demo":false},{"work":"qingyu","type":"實詞詞解","stem":"「東風夜放花千樹」中「放」字的詞義是？","options":["使……開放、綻放","放縱","發放","放逐"],"answer":"A","explanation":"動詞，解作使……開放。句法為「東風（主語）＋放（動詞）＋花千樹（賓語）」，具使動意味，比喻滿城花燈一齊亮起。15","source":"","demo":false},{"work":"qingyu","type":"實詞詞解","stem":"「笑語盈盈暗香去」中「去」字的詞義是？","options":["前往","離去、離開","去除","逝去"],"answer":"B","explanation":"動詞，解作離去、離開。古漢語「去」多解作離開，句中「去」後面無目的地，寫人走遠、只留餘香。15","source":"","demo":false},{"work":"qingyu","type":"虛詞詞解","stem":"「更吹落、星如雨」中「更」字的詞性及詞義是？","options":["動詞；改變","名詞；夜間計時單位","副詞；又、再","形容詞；更加"],"answer":"C","explanation":"副詞，解作又、再。位於動詞「吹落」前修飾動作，表遞進，承接前句再寫另一景。15","source":"","demo":false},{"work":"qingyu","type":"虛詞詞解","stem":"「那人卻在、燈火闌珊處」中「卻」字的詞義是？","options":["退後","竟然、原來（表示出乎意料）","拒絕","但是"],"answer":"B","explanation":"副詞，解作竟然、原來。修飾動詞「在」，表示結果與預期相反，帶出意外和驚喜。15","source":"","demo":false},{"work":"qingyu","type":"虛詞詞解","stem":"「眾裏尋他千百度」中「度」字的詞性與詞義是？","options":["量詞；次、回","動詞；量度","名詞；法度","動詞；揣度"],"answer":"A","explanation":"量詞，解作次、回。「度」緊接數詞「千百」，位於句末，表示計算次數。15","source":"","demo":false},{"work":"qingyu","type":"虛詞詞解","stem":"「驀然迴首」中「然」字的作用是？","options":["連詞，表示轉折","代詞，指代這件事","詞尾，表示「……的樣子」","助詞，表示強烈感嘆"],"answer":"C","explanation":"詞尾，附在「驀」字後表示狀態（……的樣子），與「忽然」、「突然」構詞相同。15","source":"","demo":false},{"work":"qingyu","type":"修辭手法","stem":"「更吹落、星如雨」運用了什麼修辭手法？","options":["借代與對偶","明喻與誇張","擬人與暗喻","頂真與設問"],"answer":"B","explanation":"「星如雨」以繁星如雨明喻燈火繁多，同時誇飾燈火的密集和璀璨。15","source":"","demo":false},{"work":"qingyu","type":"修辭手法","stem":"「鳳簫聲動，玉壺光轉」運用了什麼修辭手法？","options":["對偶","借喻","誇張","頂真"],"answer":"A","explanation":"兩句結構相同（名詞＋名詞＋動詞），詞性相對，一寫聲、一寫光，形成對偶。15","source":"","demo":false},{"work":"qingyu","type":"修辭手法","stem":"「蛾兒雪柳黃金縷」運用了什麼修辭手法？","options":["明喻","借代","擬人","對偶"],"answer":"B","explanation":"以婦女頭上的裝飾品（蛾兒、雪柳、黃金縷）借代打扮入時的婦女。15","source":"","demo":false},{"work":"qingyu","type":"範文內容","stem":"《青玉案・元夕》中，詞人寄託在「那人」身上的志向與情操是？","options":["追求功名利祿","復國的志向與高潔的情操","及時行樂的思想","歸隱山林的淡泊心態"],"answer":"B","explanation":"詞人採用借人自況的手法，將自己不願隨俗、自守節操的心境與復國志向寄託於「那人」身上。15","source":"","demo":false},{"work":"qingyu","type":"範文內容","stem":"關於《青玉案・元夕》的襯托手法，下列哪項敘述正確？","options":["以白描的淡筆描寫婦女，襯托「那人」的濃豔裝扮","以喧鬧的環境與動態描寫，反襯「那人」的幽獨與不流於俗","以「那人」的熱情主動，反襯眾人的冷漠避世","以繁華景色正襯「那人」熱愛繁華的個性"],"answer":"B","explanation":"前面描寫極盡熱鬧繽紛，越見「那人」所處的燈火闌珊之處冷落，以動襯靜、反襯「那人」不流於俗的高潔。15","source":"","demo":false},{"work":"moon","type":"實詞詞解","stem":"「獨酌無相親」中「酌」字的詞義是？","options":["斟酒","喝酒","斟酌","商量"],"answer":"B","explanation":"動詞，解作喝酒。「酌」本指「斟酒」，後引申為「喝酒」。受副詞「獨」修飾，為謂語動詞，聯繫上句「花間一壺酒」及題名可知指飲酒。","source":"","demo":false},{"work":"moon","type":"虛詞詞解","stem":"「月既不解飲」中「既」字的詞義是？","options":["已經","既然","盡了","不久"],"answer":"B","explanation":"連詞，解作既然。位於主語「月」之後修飾連貫下句，與「徒」字對舉，表因果前提，故解作「既然」。","source":"","demo":false},{"work":"moon","type":"實詞詞解","stem":"「月既不解飲」中「解」字的詞義是？","options":["剖開","解除","懂得","解釋"],"answer":"C","explanation":"動詞，解作懂得。本指解剖動物，引申為瞭解、懂得。受否定副詞「不」修飾，後接動詞「飲」，聯繫「不解風情」可知為「懂得」。","source":"","demo":false},{"work":"moon","type":"虛詞詞解","stem":"「影徒隨我身」中「徒」字的詞義是？","options":["步行","徒弟","只是、徒然","空虛"],"answer":"C","explanation":"副詞，解作只是、徒然。本指步行，引申為徒然。位於動詞「隨」前作狀語，聯繫上下文說明影子只能跟着身體，故解作「只是」。","source":"","demo":false},{"work":"moon","type":"虛詞詞解","stem":"「暫伴月將影」中「暫」字的詞義是？","options":["暫且","短暫","突然","漸漸"],"answer":"A","explanation":"副詞，解作暫且、姑且。本指短時間，引申為強調臨時改變決定。位於動詞「伴」之前，指退而求其次姑且作伴。","source":"","demo":false},{"work":"moon","type":"實詞詞解","stem":"「行樂須及春」中「及」字的詞義是？","options":["以及","趕上","趁著","涉及"],"answer":"C","explanation":"動詞，解作趁著。位於能願動詞「須」後，帶賓語「春」，可聯繫成語「及時行樂」推知「及春」即趁著春光。","source":"","demo":false},{"work":"moon","type":"虛詞詞解","stem":"「醒時同交歡」中「交」字的詞義是？","options":["交錯","交朋友","一起、互相","交換"],"answer":"C","explanation":"副詞，解作一起、互相。位於「歡」前作狀語，與「同」字連用，引申為互相、一起。","source":"","demo":false},{"work":"moon","type":"實詞詞解","stem":"「相期邈雲漢」中「邈」字的詞義是？","options":["渺小","遙遠","久遠","高超"],"answer":"B","explanation":"形容詞，解作遙遠。「邈」從「辶」部，修飾「雲漢」（銀河），指天際距離極遠。","source":"","demo":false},{"work":"moon","type":"虛詞詞解","stem":"「獨酌無相親」中「相」字的詞義與讀音是？","options":["讀〔箱〕，副詞，互相","讀〔相〕，名詞，相貌","讀〔箱〕，動詞，親近","讀〔相〕，動詞，查看"],"answer":"A","explanation":"「相」位於動詞「親」之前作狀語，屬副詞用法，破讀為〔箱〕，解作互相。","source":"","demo":false},{"work":"moon","type":"虛詞詞解","stem":"「暫伴月將影」中「將」字的詞性與詞義是？","options":["副詞，將要","動詞，帶領","連詞，和、與","名詞，將領"],"answer":"C","explanation":"連詞，解作和、與。「將」連接「月」和「影」兩個名詞，代入「與」字驗證句意通順。","source":"","demo":false},{"work":"moon","type":"實詞詞解","stem":"「相期邈雲漢」中「期」字的詞義是？","options":["期待","約定","滿一年","期限"],"answer":"B","explanation":"動詞，解作約定。指詩人與月亮、影子相約在遙遠的銀河再會。","source":"","demo":false},{"work":"moon","type":"修辭手法","stem":"「我歌月徘徊，我舞影零亂」運用了什麼修辭手法？","options":["對偶與擬人","借代與誇張","頂真與設問","明喻與對比"],"answer":"A","explanation":"前後句結構詞性相對為對偶；將月亮寫成聽歌徘徊、影子寫成伴舞零亂，赋予生命與感情，為擬人手法。","source":"","demo":false},{"work":"moon","type":"修辭手法","stem":"《月下獨酌》中「舉杯邀明月，對影成三人」主要運用了什麼手法來表現詩人的孤獨？","options":["直抒胸臆","反襯（以熱鬧襯托冷清）","象徵","用典"],"answer":"B","explanation":"通篇運用反襯，以想像中「三人共飲」的熱鬧表象，反襯出現實中「獨酌無相親」的冷清與孤獨。","source":"","demo":false},{"work":"moon","type":"範文內容","stem":"《月下獨酌》中全詩的「詩眼」和「題眼」分別是什麼字？","options":["詩眼為「春」，題眼為「酒」","詩眼為「暫」，題眼為「獨」","詩眼為「歡」，題眼為「月」","詩眼為「無情」，題眼為「影」"],"answer":"B","explanation":"精煉字詞的詩眼為「暫」（強調歡樂短暫更見孤獨）；全詩圍繞轉折的題眼為「獨」。","source":"","demo":false},{"work":"moon","type":"範文內容","stem":"《月下獨酌》中「永結無情遊」的「無情」有何深意？","options":["指詩人對世人極度絕望與無情","指月亮和影子無知覺，且指超脫世俗忘情自在的交遊","指詩人無奈斬斷與朋友的感情","指月亮冷酷無情不肯留下來"],"answer":"B","explanation":"具雙重意思：一指月影本無知覺；二指結成超脫世俗、忘情自在的交遊（典出《莊子》），展現曠達精神。","source":"","demo":false}]}</script>
+
+<script>
+(() => {
+"use strict";
+
+/* 在介面更新前保留乾淨模板，供匯出完整網站使用。 */
+const TEMPLATE = document.documentElement.outerHTML;
+const $ = id => document.getElementById(id);
+const LETTERS = "ABCD";
+const CORE_TYPES = ["實詞詞解","虛詞詞解","範文內容","修辭手法"];
+
+const WORKS = [
+  {id:"lunyu",title:"《論語》：論仁、論孝、論君子",aliases:["論語","論仁論孝論君子","論仁","論孝","論君子"]},
+  {id:"fish",title:"魚我所欲也",aliases:["魚我所欲也"]},
+  {id:"free",title:"逍遙遊",aliases:["逍遙遊"]},
+  {id:"learn",title:"勸學",aliases:["勸學"]},
+  {id:"lianpo",title:"廉頗藺相如列傳",aliases:["廉頗藺相如列傳"]},
+  {id:"chushi",title:"出師表",aliases:["出師表"]},
+  {id:"shishuo",title:"師說",aliases:["師說"]},
+  {id:"xishan",title:"始得西山宴遊記",aliases:["始得西山宴遊記"]},
+  {id:"yueyang",title:"岳陽樓記",aliases:["岳陽樓記"]},
+  {id:"liuguo",title:"六國論",aliases:["六國論"]},
+  {id:"moon",title:"月下獨酌",aliases:["月下獨酌"]},
+  {id:"autumn",title:"山居秋暝",aliases:["山居秋暝"]},
+  {id:"tower",title:"登樓",aliases:["登樓"]},
+  {id:"niannu",title:"念奴嬌・赤壁懷古",aliases:["念奴嬌","赤壁懷古"]},
+  {id:"sheng",title:"聲聲慢・秋情",aliases:["聲聲慢"]},
+  {id:"qingyu",title:"青玉案・元夕",aliases:["青玉案"]}
+];
+const WORK_MAP = new Map(WORKS.map(w => [w.id,w]));
+const GROUPS = [
+  ...WORKS.slice(0,10).map(w => ({title:w.title,ids:[w.id]})),
+  {title:"唐詩三首",ids:["moon","autumn","tower"]},
+  {title:"詞三首",ids:["niannu","sheng","qingyu"]}
+];
+
+function node(tag,text,className){
+  const e=document.createElement(tag);
+  if(text!==undefined && text!==null)e.textContent=text;
+  if(className)e.className=className;
+  return e;
+}
+function button(text,handler,className=""){
+  const b=node("button",text,className);
+  b.type="button";
+  b.addEventListener("click",handler);
+  return b;
+}
+function slug(value){
+  return String(value??"").normalize("NFKC")
+    .replace(/[\s\p{P}\p{S}]/gu,"").toLowerCase();
+}
+function compact(value){
+  return String(value??"").normalize("NFKC").replace(/\s+/g,"");
+}
+function resolveWork(value){
+  const raw=String(value??"").trim();
+  if(WORK_MAP.has(raw))return raw;
+  const s=slug(raw);
+  const found=WORKS.find(w=>w.aliases.some(a=>s.includes(slug(a))));
+  if(!found)throw new Error(
+    `無法識別範文「${raw}」。唐詩及詞請填寫單首名稱，而非只填「唐詩三首」或「詞三首」。`
+  );
+  return found.id;
+}
+function normalizeType(value){
+  const t=String(value??"").trim();
+  const aliases={
+    "實詞":"實詞詞解","實詞詞義":"實詞詞解",
+    "虛詞":"虛詞詞解","虛詞詞義":"虛詞詞解",
+    "內容理解":"範文內容","內容":"範文內容",
+    "修辭":"修辭手法","修辭技巧":"修辭手法"
+  };
+  const type=aliases[t]||t;
+  if(!type || type.length>40)throw new Error("題型不可空白，且不得超過 40 字。");
+  return type;
+}
+function unpack(q){
+  if(!Array.isArray(q))return q;
+  return {
+    work:q[0],type:q[1],stem:q[2],options:q.slice(3,7),
+    answer:q[7],explanation:q[8],
+    source:"自擬示範題（非官方試題）",demo:true
+  };
+}
+function normalizeQuestion(raw){
+  const q=unpack(raw);
+  if(!q || typeof q!=="object")throw new Error("題目資料格式不正確。");
+  const work=resolveWork(q.work);
+  const type=normalizeType(q.type);
+  const stem=String(q.stem??"").trim();
+  if(!stem)throw new Error("題目內容不可空白。");
+  if(!Array.isArray(q.options)||q.options.length!==4)
+    throw new Error("每題必須有 A–D 四個選項。");
+  const options=q.options.map(v=>String(v??"").trim());
+  if(options.some(v=>!v))throw new Error("四個選項均不可空白。");
+  if(new Set(options.map(compact)).size!==4)
+    throw new Error("同一題的四個選項不可重複。");
+  const answer=String(q.answer??"").normalize("NFKC").trim().toUpperCase();
+  if(!/^[A-D]$/.test(answer))throw new Error(`答案「${answer}」無效；只接受 A、B、C、D。`);
+  const source=String(q.source??"").trim();
+  return {
+    work,type,stem,options,answer,
+    explanation:String(q.explanation??"").trim(),
+    source,
+    demo:q.demo===true||source.includes("自擬示範")
+  };
+}
+function fingerprint(q){
+  return JSON.stringify([
+    q.work,compact(q.stem),q.options.map(compact).sort()
+  ]);
+}
+function uniqueQuestions(list){
+  const seen=new Map(),questions=[];
+  let duplicates=0;
+  for(const q of list){
+    const key=fingerprint(q),old=seen.get(key);
+    if(old){
+      const oldAnswer=compact(old.options[LETTERS.indexOf(old.answer)]);
+      const newAnswer=compact(q.options[LETTERS.indexOf(q.answer)]);
+      if(oldAnswer!==newAnswer)
+        throw new Error(`同一道題出現矛盾答案：${q.stem}`);
+      if(old.type!==q.type)
+        throw new Error(`同一道題被標為不同題型，請統一主要題型：${q.stem}`);
+      duplicates++;
+      continue;
+    }
+    seen.set(key,q);questions.push(q);
+  }
+  return {questions,duplicates};
+}
+function validateBank(list){
+  if(!Array.isArray(list)||list.length===0)throw new Error("題庫沒有題目。");
+  if(list.length>10000)throw new Error("此單檔版本每個題庫上限為 10,000 題。");
+  return uniqueQuestions(list.map(normalizeQuestion)).questions;
+}
+function readJSON(key){
+  try{return JSON.parse(localStorage.getItem(key)||"null");}catch{return null;}
+}
+function saveJSON(key,value){
+  try{localStorage.setItem(key,JSON.stringify(value));return true;}
+  catch{return false;}
+}
+function removeSaved(key){
+  try{localStorage.removeItem(key);}catch{}
+}
+
+const packaged=JSON.parse($("bank-data").textContent);
+const BASE_BANK=validateBank(packaged.questions);
+const STORAGE_KEY="dse-bank:"+packaged.revision;
+const LAST_KEY="dse-last:"+packaged.revision;
+let bank=BASE_BANK;
+let localBank=false;
+const cached=readJSON(STORAGE_KEY);
+if(cached){
+  try{bank=validateBank(cached.questions);localBank=true;}catch{}
+}
+let selectedWorks=new Set();
+let selectedTypes=new Set();
+let workControls=[];
+let groupControls=[];
+let attempt=null;
+let importing=false;
+const savedLast=readJSON(LAST_KEY);
+let lastKeys=new Set(Array.isArray(savedLast)?savedLast.filter(x=>typeof x==="string"):[]);
+
+function allTypes(){
+  return [...new Set([...CORE_TYPES,...bank.map(q=>q.type)])];
+}
+function eligible(){
+  return bank.filter(q=>selectedWorks.has(q.work)&&selectedTypes.has(q.type));
+}
+function requestedCount(){
+  return Number($("q-count").value);
+}
+function setScreen(name){
+  ["works","types","quiz","results"].forEach(s=>{
+    $("screen-"+s).hidden=s!==name;
+  });
+  $("manager").hidden=!["works","types"].includes(name);
+  const heading=$("screen-"+name).querySelector("h2");
+  heading.focus({preventScroll:true});
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function updateBanner(){
+  const demos=bank.filter(q=>q.demo).length;
+  $("bank-badge").textContent=demos===bank.length
+    ?"示範題庫"
+    :demos>0?"混合題庫 · 含示範題":localBank?"本機自備題庫":"網站題庫";
+  $("bank-info").textContent=
+    `十二組材料 · 題庫共 ${bank.length} 題 · 毋須登入`;
+  $("demo-note").hidden=demos===0;
+}
+function renderWorks(){
+  const box=$("work-grid");
+  box.replaceChildren();
+  workControls=[];groupControls=[];
+  GROUPS.forEach((g,index)=>{
+    const card=node("div",null,"work-card");
+    const label=node("label",null,"work-top");
+    const input=document.createElement("input");
+    input.type="checkbox";
+    const title=node("span",`${index+1}. ${g.title}`);
+    const count=bank.filter(q=>g.ids.includes(q.work)).length;
+    label.append(input,title,node("span",`${count} 題`,"count"));
+    input.addEventListener("change",()=>{
+      g.ids.forEach(id=>input.checked?selectedWorks.add(id):selectedWorks.delete(id));
+      syncWorks();
+    });
+    card.append(label);
+    groupControls.push({input,card,ids:g.ids});
+
+    if(g.ids.length>1){
+      const children=node("div",null,"children");
+      g.ids.forEach(id=>{
+        const childLabel=node("label",null,"child-choice");
+        const child=document.createElement("input");
+        child.type="checkbox";
+        const n=bank.filter(q=>q.work===id).length;
+        childLabel.append(child,node("span",`${WORK_MAP.get(id).title}（${n} 題）`));
+        child.addEventListener("change",()=>{
+          child.checked?selectedWorks.add(id):selectedWorks.delete(id);
+          syncWorks();
+        });
+        workControls.push({input:child,id});
+        children.append(childLabel);
+      });
+      card.append(children);
+    }
+    box.append(card);
+  });
+  syncWorks();
+}
+function syncWorks(){
+  groupControls.forEach(({input,card,ids})=>{
+    const n=ids.filter(id=>selectedWorks.has(id)).length;
+    input.checked=n===ids.length;
+    input.indeterminate=n>0&&n<ids.length;
+    card.classList.toggle("on",n>0);
+  });
+  workControls.forEach(({input,id})=>input.checked=selectedWorks.has(id));
+  const total=bank.filter(q=>selectedWorks.has(q.work)).length;
+  $("work-selected").textContent=
+    `已選 ${selectedWorks.size} 個篇章／單首作品，相關題目共 ${total} 題。`;
+  $("to-types").disabled=selectedWorks.size===0||importing;
+}
+function renderTypes(){
+  const box=$("type-grid");
+  box.replaceChildren();
+  allTypes().forEach(type=>{
+    const count=bank.filter(q=>selectedWorks.has(q.work)&&q.type===type).length;
+    const label=node("label",null,"type-choice");
+    const input=document.createElement("input");
+    input.type="checkbox";input.checked=selectedTypes.has(type);
+    label.classList.toggle("on",input.checked);
+    label.append(input,node("span",type),node("span",`${count} 題`,"count"));
+    input.addEventListener("change",()=>{
+      input.checked?selectedTypes.add(type):selectedTypes.delete(type);
+      label.classList.toggle("on",input.checked);
+      updateEligibility();
+    });
+    box.append(label);
+  });
+  updateEligibility();
+}
+function updateEligibility(){
+  const count=requestedCount(),available=eligible().length;
+  const validCount=Number.isInteger(count)&&count>=20&&count<=40;
+  $("count-label").textContent=count;
+  $("eligible-number").textContent=available;
+  let message="",valid=false;
+  if(importing)message="正在處理題庫，請稍候。";
+  else if(!selectedWorks.size)message="請先選擇至少一篇範文。";
+  else if(!selectedTypes.size)message="請選擇至少一種題型。";
+  else if(!validCount)message="每次練習必須為 20–40 題。";
+  else if(available<20)
+    message=`目前只有 ${available} 題，未達最低 20 題。請增加範文／題型，或匯入更多題目。`;
+  else if(available<count)
+    message=`目前只有 ${available} 題。請把題數調低至 ${available} 題或以下，或擴大選擇範圍。`;
+  else{
+    valid=true;
+    message=`可以開始：從 ${available} 題中抽出 ${count} 題，同一份練習不重複。`;
+  }
+  $("eligibility").textContent=message;
+  $("eligibility").className="eligibility "+(valid?"ok":"error");
+  $("start").disabled=!valid;
+}
+function resetSetup(){
+  selectedWorks=new Set();
+  selectedTypes=new Set(allTypes());
+  $("q-count").value=20;
+  updateBanner();renderWorks();renderTypes();setScreen("works");
+}
+
+/* Fisher–Yates 洗牌，避免使用不均勻的隨機 sort。 */
+function shuffle(items){
+  const a=items.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function startAttempt(){
+  const pool=eligible(),n=requestedCount();
+  if(importing||!Number.isInteger(n)||n<20||n>40||pool.length<n){
+    updateEligibility();return;
+  }
+  const fresh=shuffle(pool.filter(q=>!lastKeys.has(fingerprint(q))));
+  const old=shuffle(pool.filter(q=>lastKeys.has(fingerprint(q))));
+  const picked=shuffle([
+    ...fresh.slice(0,n),
+    ...old.slice(0,Math.max(0,n-fresh.length))
+  ]);
+  const repeats=picked.filter(q=>lastKeys.has(fingerprint(q))).length;
+  attempt={
+    questions:picked,answers:Array(n).fill(null),index:0,
+    finished:false,repeats
+  };
+  lastKeys=new Set(picked.map(fingerprint));
+  saveJSON(LAST_KEY,[...lastKeys]);
+  $("quiz-summary").textContent=
+    `共 ${n} 題 · 範文及題型均依照你的選擇 · 交卷後才顯示答案`;
+  $("repeat-info").textContent=repeats
+    ?`因題庫數量所限，本輪有 ${repeats} 題曾在上一輪出現；已優先選用其他題目。`
+    :"本輪沒有與上一輪相同的題目。";
+  renderQuestion(false);
+  setScreen("quiz");
+}
+function updateQuizStatus(){
+  const answered=attempt.answers.filter(a=>a!==null).length;
+  const n=attempt.questions.length;
+  $("quiz-progress").max=n;
+  $("quiz-progress").value=answered;
+  $("quiz-progress-text").textContent=
+    `第 ${attempt.index+1} / ${n} 題 · 已作答 ${answered} 題`;
+  const nav=$("quiz-nav");
+  nav.replaceChildren();
+  attempt.questions.forEach((q,i)=>{
+    const b=button(String(i+1),()=>jumpTo(i));
+    b.classList.toggle("answered",attempt.answers[i]!==null);
+    b.classList.toggle("current",attempt.index===i);
+    b.setAttribute("aria-label",`第 ${i+1} 題，${attempt.answers[i]===null?"未作答":"已作答"}`);
+    if(attempt.index===i)b.setAttribute("aria-current","step");
+    nav.append(b);
+  });
+}
+function renderQuestion(focus=true){
+  const q=attempt.questions[attempt.index];
+  $("question-meta").replaceChildren(
+    node("span",WORK_MAP.get(q.work).title,"tag"),
+    node("span",q.type,"tag")
+  );
+  const box=$("question-box");
+  box.replaceChildren();
+  const legend=node("legend",`${attempt.index+1}. ${q.stem}`);
+  legend.tabIndex=-1;
+  box.append(legend);
+  const optionLabels=[];
+  q.options.forEach((text,i)=>{
+    const letter=LETTERS[i];
+    const label=node("label",null,"choice");
+    const radio=document.createElement("input");
+    radio.type="radio";radio.name="current-answer";radio.value=letter;
+    radio.checked=attempt.answers[attempt.index]===letter;
+    label.classList.toggle("on",radio.checked);
+    label.append(radio,node("span",letter,"option-letter"),node("span",text,"option-text"));
+    optionLabels.push({label,radio});
+    radio.addEventListener("change",()=>{
+      attempt.answers[attempt.index]=letter;
+      optionLabels.forEach(x=>x.label.classList.toggle("on",x.radio.checked));
+      updateQuizStatus();
+    });
+    box.append(label);
+  });
+  $("prev").disabled=attempt.index===0;
+  $("next").disabled=attempt.index===attempt.questions.length-1;
+  updateQuizStatus();
+  if(focus){
+    legend.focus({preventScroll:true});
+    legend.scrollIntoView({block:"start",behavior:"smooth"});
+  }
+}
+function jumpTo(index){
+  if(!attempt||index<0||index>=attempt.questions.length)return;
+  attempt.index=index;renderQuestion();
+}
+function submitAttempt(){
+  if(!attempt||attempt.finished)return;
+  const unanswered=attempt.answers.filter(a=>a===null).length;
+  if(unanswered&&!confirm(`尚有 ${unanswered} 題未作答。照樣交卷嗎？未答題會計作答錯。`))return;
+  attempt.finished=true;
+  $("review-only").checked=false;
+  renderResults();setScreen("results");
+}
+function renderResults(){
+  const total=attempt.questions.length;
+  const correct=attempt.questions.filter((q,i)=>q.answer===attempt.answers[i]).length;
+  const percent=Math.round(correct/total*100);
+  const unanswered=attempt.answers.filter(a=>a===null).length;
+  $("score-number").textContent=`${percent}%`;
+  $("score-text").textContent=`答對 ${correct} / ${total} 題 · 未答 ${unanswered} 題`;
+  $("result-encouragement").textContent=percent>=80
+    ?"保持節奏！可以轉換篇章或題型，繼續鞏固理解。"
+    :"每道錯題都是下一步的方向。先看解析，再回到原文核對，會更有收穫。";
+
+  const stats=new Map();
+  attempt.questions.forEach((q,i)=>{
+    if(!stats.has(q.type))stats.set(q.type,{total:0,correct:0});
+    const s=stats.get(q.type);s.total++;
+    if(q.answer===attempt.answers[i])s.correct++;
+  });
+  const table=node("table"),head=node("thead"),tr=node("tr");
+  ["題型","答對／題數","正確率"].forEach(t=>{
+    const th=node("th",t);th.scope="col";tr.append(th);
+  });
+  head.append(tr);table.append(head);
+  const body=node("tbody");
+  stats.forEach((s,type)=>{
+    const row=node("tr");
+    row.append(
+      node("td",type),
+      node("td",`${s.correct} / ${s.total}`),
+      node("td",`${Math.round(s.correct/s.total*100)}%`)
+    );
+    body.append(row);
+  });
+  table.append(body);$("breakdown").replaceChildren(table);
+  renderReview();
+}
+function renderReview(){
+  const box=$("review-list");box.replaceChildren();
+  let shown=0;
+  attempt.questions.forEach((q,i)=>{
+    const selected=attempt.answers[i],correct=selected===q.answer;
+    if($("review-only").checked&&correct)return;
+    shown++;
+    const item=node("article",null,"review"+(correct?"":" wrong"));
+    item.append(
+      node("p",`${correct?"答對":selected===null?"未作答":"答錯"} · ${WORK_MAP.get(q.work).title} · ${q.type}`,"small-text"),
+      node("h3",`${i+1}. ${q.stem}`)
+    );
+    const list=node("ul");
+    q.options.forEach((text,j)=>{
+      const letter=LETTERS[j],notes=[];
+      if(letter===q.answer)notes.push("正確答案");
+      if(letter===selected)notes.push("你的答案");
+      const li=node("li",`${letter}. ${text}${notes.length?"（"+notes.join("／")+"）":""}`);
+      if(letter===q.answer)li.className="correct";
+      else if(letter===selected)li.className="incorrect";
+      list.append(li);
+    });
+    item.append(list,node("p",
+      "解析："+(q.explanation||"題庫未提供解析，請依原文、課本或老師講解核對。"),
+      "explanation"
+    ));
+    if(q.source)item.append(node("p","來源／標記："+q.source,"muted small-text"));
+    box.append(item);
+  });
+  if(!shown)box.append(node("p","本次沒有錯題或未答題。可以取消篩選，查看全部解析。","muted"));
+}
+
+/* CSV：支援 UTF-8 BOM、引號、欄內逗號及欄內換行。 */
+function parseCSV(input){
+  const text=input.replace(/^\uFEFF/,"").replace(/^sep=,\r?\n/i,"");
+  if(text.includes("\uFFFD"))
+    throw new Error("文字出現編碼錯誤，請在 Excel 另存為 CSV UTF-8 後再匯入。");
+  const rows=[];
+  let row=[],value="",quoted=false,closed=false;
+  for(let i=0;i<=text.length;i++){
+    const c=text[i];
+    if(quoted){
+      if(c===undefined)throw new Error("CSV 有未關閉的雙引號。");
+      if(c==='"'){
+        if(text[i+1]==='"'){value+='"';i++;}
+        else{quoted=false;closed=true;}
+      }else value+=c;
+      continue;
+    }
+    if(c==='"'){
+      if(value!==""||closed)throw new Error("CSV 引號格式不正確，請由 Excel 重新匯出。");
+      quoted=true;
+    }else if(c===","||c==="\n"||c==="\r"||c===undefined){
+      row.push(value);value="";closed=false;
+      if(c!==","){
+        rows.push(row);row=[];
+        if(c==="\r"&&text[i+1]==="\n")i++;
+      }
+    }else{
+      if(closed){
+        if(!/\s/.test(c))throw new Error("CSV 關閉引號後出現多餘文字。");
+      }else value+=c;
+    }
+  }
+  return rows.filter(r=>r.some(c=>c.trim()!==""));
+}
+function cleanHeader(value){
+  return String(value).normalize("NFKC").replace(/\s/g,"")
+    .replace(/^[A-Z]欄/i,"")
+    .replace(/[\p{P}\p{S}]/gu,"").toUpperCase();
+}
+function questionsFromCSV(text){
+  const rows=parseCSV(text);
+  if(rows.length<2)throw new Error("CSV 需要一列標題，以及至少一列題目。");
+  const headers=rows[0].map(cleanHeader);
+  const patterns={
+    work:/^(範文名稱|文章名稱|篇章名稱|篇章|篇目|WORK|ARTICLE)$/,
+    type:/^(題型分類|題目類型|題型|類型|TYPE|CATEGORY)$/,
+    stem:/^(題目內容|題幹|題目|QUESTION|STEM)$/,
+    A:/^(選項A|OPTIONA|A)$/,
+    B:/^(選項B|OPTIONB|B)$/,
+    C:/^(選項C|OPTIONC|C)$/,
+    D:/^(選項D|OPTIOND|D)$/,
+    answer:/^(正確答案|答案|ANSWER)$/,
+    explanation:/^(詳解.*|解析|解說|EXPLANATION)$/,
+    source:/^(SOURCE|來源|出處)$/
+  };
+  const columns={};
+  for(const [name,pattern] of Object.entries(patterns)){
+    const matches=headers.map((h,i)=>pattern.test(h)?i:-1).filter(i=>i>=0);
+    if(matches.length>1)throw new Error(`欄位 ${name} 重複，請只保留一欄。`);
+    columns[name]=matches.length?matches[0]:-1;
+  }
+  const required=["work","type","stem","A","B","C","D","answer"];
+  const missing=required.filter(k=>columns[k]<0);
+  if(missing.length)
+    throw new Error("缺少必要欄位："+missing.join("、")+"。\n請參考「下載 CSV 範本」。");
+
+  const questions=[],errors=[];
+  rows.slice(1).forEach((row,index)=>{
+    const get=k=>columns[k]<0?"":row[columns[k]]??"";
+    try{
+      if(row.length>headers.length&&row.slice(headers.length).some(v=>v.trim()))
+        throw new Error("資料欄數多於標題欄數，請檢查未加引號的逗號。");
+      questions.push(normalizeQuestion({
+        work:get("work"),type:get("type"),stem:get("stem"),
+        options:["A","B","C","D"].map(get),
+        answer:get("answer"),explanation:get("explanation"),source:get("source")
+      }));
+    }catch(error){
+      errors.push(`第 ${index+2} 列：${error.message}`);
+    }
+  });
+  if(errors.length)
+    throw new Error(
+      `發現 ${errors.length} 列資料有問題，本次不會改動現有題庫。\n`+
+      errors.slice(0,100).join("\n")+
+      (errors.length>100?"\n其餘錯誤請修正後再次匯入。":"")
+    );
+  return questions;
+}
+async function importCSV(event){
+  const file=event.target.files[0];
+  if(!file)return;
+  const mode=$("csv-mode").value;
+  importing=true;$("csv-file").disabled=true;
+  syncWorks();updateEligibility();
+  $("import-message").textContent="正在讀取 CSV…";
+  $("import-message").className="";
+  try{
+    if(file.size>5*1024*1024)throw new Error("檔案超過 5 MB，請先拆分題庫。");
+    const incoming=questionsFromCSV(await file.text());
+    if(attempt&&!attempt.finished)throw new Error("請先結束目前練習，再匯入題庫。");
+    const combined=mode==="merge"?[...bank,...incoming]:incoming;
+    if(combined.length>10000)throw new Error("此版本每個題庫最多處理 10,000 題。");
+    const result=uniqueQuestions(combined);
+    const next=result.questions;
+    const noExplanation=next.filter(q=>!q.explanation).length;
+    const demoCount=next.filter(q=>q.demo).length;
+    const prompt=[
+      mode==="merge"?"確認合併題庫？":"確認取代目前題庫？",
+      `匯入後共 ${next.length} 題。`,
+      `略過完全重複題 ${result.duplicates} 題。`,
+      `未提供解析 ${noExplanation} 題。`,
+      demoCount?`注意：仍包含 ${demoCount} 題示範題。`:"",
+      "格式通過不代表學科內容已核實，請先核對答案。"
+    ].filter(Boolean).join("\n");
+    if(!confirm(prompt)){
+      $("import-message").textContent="已取消，原有題庫沒有改動。";
+      return;
+    }
+    bank=next;localBank=true;attempt=null;
+    lastKeys=new Set();removeSaved(LAST_KEY);
+    const saved=saveJSON(STORAGE_KEY,{questions:bank});
+    resetSetup();
+    $("manager").open=true;
+    $("import-message").className=saved?"ok":"error";
+    $("import-message").textContent=
+      `匯入完成：現有 ${bank.length} 題；略過重複題 ${result.duplicates} 題。`+
+      (saved?"已儲存於本瀏覽器。":"瀏覽器未能永久儲存，請在關閉頁面前匯出 HTML 備份。")+
+      "\n其他學生不會自動收到更新；請匯出發佈版 HTML 並重新上載。";
+  }catch(error){
+    $("import-message").className="error";
+    $("import-message").textContent=error.message;
+  }finally{
+    importing=false;$("csv-file").disabled=false;$("csv-file").value="";
+    syncWorks();updateEligibility();
+  }
+}
+function download(filename,content,type){
+  const blob=new Blob([content],{type});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),10000);
+}
+function csvCell(value){
+  let s=String(value??"");
+  // 避免匯出到試算表後，被當作公式執行。
+  if(/^[\s]*[=+\-@]/.test(s))s="'"+s;
+  return '"'+s.replace(/"/g,'""')+'"';
+}
+function csvText(questions){
+  const rows=[[
+    "範文名稱","題型分類","題目內容","選項A","選項B",
+    "選項C","選項D","正確答案","詳解及推導","Source"
+  ]];
+  questions.forEach(q=>{
+    rows.push([
+      WORK_MAP.get(q.work).title,q.type,q.stem,...q.options,
+      q.answer,q.explanation,q.source
+    ]);
+  });
+  return "\uFEFF"+rows.map(r=>r.map(csvCell).join(",")).join("\r\n");
+}
+function exportHTML(){
+  const demoCount=bank.filter(q=>q.demo).length;
+  if(demoCount&&!confirm(`目前包含 ${demoCount} 題示範題。仍要匯出嗎？正式使用建議先換成已核對的題库。`))return;
+  const doc=new DOMParser().parseFromString(TEMPLATE,"text/html");
+  const data={
+    revision:"published-"+Date.now()+"-"+Math.random().toString(36).slice(2,8),
+    questions:bank
+  };
+  // 題目只作文字保存，防止內容被解讀成 HTML 標籤。
+  doc.getElementById("bank-data").textContent=JSON.stringify(data)
+    .replace(/</g,"\\u003c")
+    .replace(/\u2028/g,"\\u2028")
+    .replace(/\u2029/g,"\\u2029");
+  download("index.html","<!doctype html>\n"+doc.documentElement.outerHTML,"text/html;charset=utf-8");
+}
+function restoreBank(){
+  if(importing)return;
+  if(!confirm("還原這份網站原本附送的題庫？本機匯入的版本將被移除，建議先匯出備份。"))return;
+  removeSaved(STORAGE_KEY);removeSaved(LAST_KEY);
+  bank=BASE_BANK;localBank=false;lastKeys=new Set();attempt=null;
+  resetSetup();
+  $("import-message").className="ok";
+  $("import-message").textContent="已還原隨網站附送的題庫。";
+}
+
+/* 事件綁定 */
+$("work-all").addEventListener("click",()=>{
+  selectedWorks=new Set(WORKS.map(w=>w.id));syncWorks();
+});
+$("work-none").addEventListener("click",()=>{selectedWorks.clear();syncWorks();});
+$("to-types").addEventListener("click",()=>{renderTypes();setScreen("types");});
+$("back-works").addEventListener("click",()=>{syncWorks();setScreen("works");});
+$("type-all").addEventListener("click",()=>{
+  selectedTypes=new Set(allTypes());renderTypes();
+});
+$("type-none").addEventListener("click",()=>{selectedTypes.clear();renderTypes();});
+$("q-count").addEventListener("input",updateEligibility);
+$("start").addEventListener("click",startAttempt);
+$("prev").addEventListener("click",()=>jumpTo(attempt.index-1));
+$("next").addEventListener("click",()=>jumpTo(attempt.index+1));
+$("submit").addEventListener("click",submitAttempt);
+$("leave").addEventListener("click",()=>{
+  if(confirm("離開後，本次未交卷的作答會被清除。確定離開？")){
+    attempt=null;renderTypes();setScreen("types");
+  }
+});
+$("review-only").addEventListener("change",renderReview);
+$("again").addEventListener("click",startAttempt);
+$("change-filter").addEventListener("click",()=>{
+  attempt=null;syncWorks();setScreen("works");
+});
+$("csv-file").addEventListener("change",importCSV);
+$("template").addEventListener("click",()=>{
+  download("題庫範本.csv",csvText([BASE_BANK[0]]),"text/csv;charset=utf-8");
+});
+$("export-csv").addEventListener("click",()=>{
+  download("十二篇題庫.csv",csvText(bank),"text/csv;charset=utf-8");
+});
+$("export-html").addEventListener("click",exportHTML);
+$("restore").addEventListener("click",restoreBank);
+resetSetup();
+
+})();
+</script></body></html>
